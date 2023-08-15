@@ -1,5 +1,5 @@
 {
-  "name": "hub-discovery-data",
+  "name": "eishub-census-renew",
   "version": "0.0.0",
   "private": true,
   "scripts": {
@@ -13,7 +13,6 @@
   },
   "dependencies": {
     "@picocss/pico": "^1.5.10",
-    "pinia": "^2.1.4",
     "sass": "^1.64.1",
     "vue": "^3.3.4"
   },
