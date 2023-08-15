@@ -10,13 +10,13 @@ const props = defineProps<{
 const censusQuery =
   'https://nomanssky.fandom.com/api.php?action=cargoquery&format=json&origin=*&limit=500&tables=Bases&fields=Name%2C%20Builder%2C%20Builderlink&where=CensusShow%20IS%20NOT%20NULL%20AND%20Civilized%3D%22Galactic%20Hub%20Eissentam%22%20AND%20CensusRenewal%20!%3D%20Year(Now())';
 
-const censusData = ref<{ cargoquery: QueryEntry[] }>({ cargoquery: [] });
+const censusData = ref<QueryEntry[]>([]);
 const requestFailed = ref<boolean>(false);
 
 onMounted(() =>
   fetch(censusQuery)
     .then((r) => r.json())
-    .then((j) => (censusData.value = j))
+    .then((j) => (censusData.value = j.cargoquery))
     .catch((e) => {
       console.warn(e);
       requestFailed.value = true;
@@ -25,7 +25,7 @@ onMounted(() =>
 );
 
 const filteredCensusData = computed(() =>
-  censusData.value.cargoquery.filter(
+  censusData.value.filter(
     (item) =>
       item.title.Builder?.toLowerCase().includes(props.filter.toLowerCase()) || // NoSonar this must be an OR
       item.title.Builderlink?.toLowerCase().includes(props.filter.toLowerCase())
@@ -35,7 +35,7 @@ const filteredCensusData = computed(() =>
 
 <template>
   <div
-    v-if="censusData.cargoquery.length"
+    v-if="censusData.length"
     class="table"
   >
     <UserRow

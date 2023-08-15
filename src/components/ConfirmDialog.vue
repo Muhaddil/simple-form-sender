@@ -6,7 +6,10 @@ defineProps<{
 }>();
 
 const dialogElement = ref<HTMLDialogElement | null>(null);
-const toggleModal = () => dialogElement.value?.showModal();
+const toggleModal = () => {
+  dialogElement.value?.showModal();
+  (document.activeElement as HTMLElement | null)?.blur();
+};
 
 defineExpose({
   toggleModal,
@@ -17,11 +20,15 @@ defineExpose({
   <dialog ref="dialogElement">
     <article>
       <header>
-        <a
-          href="#close"
-          aria-label="Close"
-          class="close"
-        ></a>
+        <form
+          method="dialog"
+          class="close-button-wrapper"
+        >
+          <button
+            aria-label="Close"
+            class="close"
+          ></button>
+        </form>
         Confirm renewal of {{ userName }}?
       </header>
       <form
@@ -43,6 +50,20 @@ defineExpose({
 
   & button {
     margin-bottom: 0;
+  }
+}
+
+.close-button-wrapper {
+  display: inline;
+  margin-bottom: 0;
+
+  .close {
+    background-color: transparent;
+    border: none;
+
+    &:active {
+      box-shadow: none;
+    }
   }
 }
 </style>

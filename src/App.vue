@@ -12,6 +12,7 @@ const filter = ref<string>('');
 
   <main>
     <input
+      placeholder="Search Name"
       type="text"
       name="searchBar"
       id="searchBar"
@@ -25,18 +26,5 @@ const filter = ref<string>('');
 .title {
   margin-block-end: 2rem;
   text-align: center;
-}
-
-.subpage-nav {
-  justify-content: center;
-  gap: 2rem;
-  font-size: larger;
-  margin-block-end: 1rem;
-  flex-wrap: wrap;
-
-  a.router-link-exact-active {
-    color: inherit;
-    pointer-events: none;
-  }
 }
 </style>

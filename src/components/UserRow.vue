@@ -14,6 +14,7 @@ const props = defineProps<{
 
 const webhook = atob(import.meta.env.VITE_DISCORD_WEBHOOK);
 const wikiLink = 'https://nomanssky.fandom.com/wiki/Special:EditPage/';
+
 const confirmDialog = ref<InstanceType<typeof ConfirmDialog> | null>(null);
 const renewText = ref<string>('Request Renewal');
 const renewed = ref<boolean>(false);
