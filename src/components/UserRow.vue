@@ -39,9 +39,6 @@ async function requestRenewal() {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      username: 'Census Renewal',
-      avatar_url:
-        'https://static.wikia.nocookie.net/nomanssky_gamepedia/images/6/60/Galactic_Hub_Eissentam_Emblem.png?format=original',
       content: `${userName.value} requested renewal.\n<${new URL(wikiLink + props.userObject.title.Name)}>`,
     }),
   });
