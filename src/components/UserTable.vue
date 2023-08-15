@@ -8,7 +8,7 @@ const props = defineProps<{
 }>();
 
 const censusQuery =
-  'https://nomanssky.fandom.com/api.php?action=cargoquery&format=json&origin=*&limit=500&tables=Bases&fields=Name%2C%20Builder%2C%20Builderlink&where=CensusShow%20IS%20NOT%20NULL%20AND%20Civilized%3D%22Galactic%20Hub%20Eissentam%22%20AND%20CensusRenewal%20!%3D%20Year(Now())';
+  'https://nomanssky.fandom.com/api.php?action=cargoquery&format=json&origin=*&limit=500&tables=Bases&fields=Name%2C%20CensusPlayer%2C%20CensusRenewal&where=CensusShow%20IS%20NOT%20NULL%20AND%20Civilized%3D%22Galactic%20Hub%20Eissentam%22&order_by=CensusRenewal';
 
 const censusData = ref<QueryEntry[]>([]);
 const requestFailed = ref<boolean>(false);
@@ -21,15 +21,10 @@ onMounted(() =>
       console.warn(e);
       requestFailed.value = true;
     })
-    .finally(() => console.log('received!'))
 );
 
 const filteredCensusData = computed(() =>
-  censusData.value.filter(
-    (item) =>
-      item.title.Builder?.toLowerCase().includes(props.filter.toLowerCase()) || // NoSonar this must be an OR
-      item.title.Builderlink?.toLowerCase().includes(props.filter.toLowerCase())
-  )
+  censusData.value.filter((item) => item.title.CensusPlayer.toLowerCase().includes(props.filter.toLowerCase()))
 );
 </script>
 
@@ -48,6 +43,8 @@ const filteredCensusData = computed(() =>
     v-else-if="!requestFailed"
     aria-busy="true"
   ></div>
+
+  <div v-else>Something went wrong :/</div>
 </template>
 
 <style lang="scss">

@@ -1,38 +1,29 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
 import ConfirmDialog from './ConfirmDialog.vue';
+import { type QueryEntry } from '@/types/query';
 
 const props = defineProps<{
-  userObject: {
-    title: {
-      Name: string;
-      Builder: string | null;
-      Builderlink: string | null;
-    };
-  };
+  userObject: QueryEntry;
 }>();
 
 const webhook = atob(import.meta.env.VITE_DISCORD_WEBHOOK);
 const wikiLink = 'https://nomanssky.fandom.com/wiki/Special:EditPage/';
+const userName = computed(() => props.userObject.title.CensusPlayer);
 
 const confirmDialog = ref<InstanceType<typeof ConfirmDialog> | null>(null);
-const renewText = ref<string>('Request Renewal');
-const renewed = ref<boolean>(false);
-
-const userName = computed(() => {
-  const userObj = props.userObject.title;
-  return (
-    userObj.Builderlink ??
-    (userObj.Builder?.startsWith('[http')
-      ? userObj.Builder?.slice(0, -1).split(' ').slice(1).join('')
-      : userObj.Builder) ??
-    ''
-  );
+const renewText = computed(() => {
+  if (renewRequested.value) return 'Renewal Requested';
+  if (renewed.value) return 'Already Renewed';
+  return 'Request Renewal';
 });
 
+const renewed = computed(() => props.userObject.title.CensusRenewal === new Date().getFullYear().toString());
+
+const renewRequested = ref<boolean>(false);
+
 async function requestRenewal() {
-  renewText.value = 'Renewal Requested';
-  renewed.value = true;
+  renewRequested.value = true;
   await fetch(webhook, {
     method: 'POST',
     headers: {
@@ -58,7 +49,7 @@ const openDialog = () => confirmDialog.value?.toggleModal();
     ref="renewButton"
     type="button"
     @click="openDialog"
-    :disabled="renewed"
+    :disabled="renewed || renewRequested"
   >
     {{ renewText }}
   </button>
