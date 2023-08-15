@@ -25,7 +25,7 @@ jobs:
         run: |
           npm ci
           echo -n 'VITE_DISCORD_WEBHOOK=' > .env
-          echo '${{ secrets.DISCORD_WEBHOOK }}' | base64 >> .env
+          echo '${{ secrets.DISCORD_WEBHOOK }}' | base64 | tr -d "\n\r" >> .env
           npm run build
           cd dist
           touch .nojekyll
