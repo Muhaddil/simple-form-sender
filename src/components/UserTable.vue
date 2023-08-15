@@ -54,7 +54,6 @@ const filteredCensusData = computed(() =>
 .table {
   display: grid;
   grid-template-columns: repeat(2, auto);
-  gap: 1rem;
   align-items: center;
 }
 </style>
