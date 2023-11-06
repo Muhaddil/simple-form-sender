@@ -7,7 +7,7 @@ const filter = ref<string>('');
 
 <template>
   <header>
-    <h1 class="title">EisHub Census Renewal</h1>
+    <h1 class="title">Eisvana Census Renewal</h1>
   </header>
 
   <main>
