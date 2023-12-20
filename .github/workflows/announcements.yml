@@ -47,7 +47,7 @@ jobs:
             message='The Census Renewal Website is now open! https://lenni009.github.io/EisHub-Census-Renew/ It will be closed on the 1st of February.'
           elif [ "${{github.event.schedule}}" == '43 2 1 2 *' ]
           then
-            message='The Census Renewal Website has closed! It will reopen on the 1st of January.'
+            message='The Census Renewal Website has closed! It will reopen next year on the 1st of January.'
           fi
 
           if [ -n "$message" ]
