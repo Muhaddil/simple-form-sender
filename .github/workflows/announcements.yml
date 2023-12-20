@@ -29,6 +29,11 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
 
+      # say hello world
+      - name: 'say hi'
+        if: github.event.schedule == '*/5 * * * *'
+        run: echo 'hi'
+
   announce:
     needs: set-visibility
 
