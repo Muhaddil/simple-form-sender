@@ -15,8 +15,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: 'Checkout Repo'
+        uses: actions/checkout@v4
+
       - name: 'Setup Deno'
         uses: denoland/setup-deno@v1
+
+      - run: gh repo edit ${{ github.repository }} --visibility public
+        env:
+          GH_TOKEN: ${{ secrets.PAT }}
+
 
       - name: 'Send Announcement'
         run: |
