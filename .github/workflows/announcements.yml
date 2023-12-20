@@ -8,6 +8,7 @@ on:
     # if cron jobs are delayed for too long, they might be dropped -> bad
     - cron: '43 4 1 1 *'
     - cron: '43 4 1 2 *'
+    - cron: '*/5 * * * *'
 
 jobs:
   set-visibility:
