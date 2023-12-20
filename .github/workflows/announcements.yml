@@ -6,8 +6,8 @@ on:
   schedule:
     # the time here is kinda random to dodge high load time on GH that may block cron jobs
     # if cron jobs are delayed for too long, they might be dropped -> bad
-    # - cron: '43 4 1 1 *'
-    # - cron: '43 4 1 2 *'
+    - cron: '43 4 1 1 *'
+    - cron: '43 4 1 2 *'
     - cron: '*/5 * * * *'
 
 jobs:
@@ -15,6 +15,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: 'Checkout Repo'
+        uses: actions/checkout@v4
+
       - name: 'Setup Deno'
         uses: denoland/setup-deno@v1
 
@@ -48,5 +51,5 @@ jobs:
 
           if [ -n "$message" ]
           then
-            deno run --allow-net ./sendAnnouncements.ts ${{secrets.DISCORD_ANNOUNCEMENT_WEBHOOK}} $message
+            deno run --allow-net ./.github/workflows/sendAnnouncements.ts ${{secrets.DISCORD_ANNOUNCEMENT_WEBHOOK}} $message
           fi
