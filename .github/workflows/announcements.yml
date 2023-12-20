@@ -1,0 +1,35 @@
+name: Announcement
+
+run-name: Send Announcement
+
+on:
+  schedule:
+    - cron: '0 0 1 1 *'
+    - cron: '0 0 1 2 *'
+    - cron: '5 * * * *'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 'Setup Deno'
+        uses: denoland/setup-deno@v1
+
+      - name: 'Send Announcement'
+        run: |
+          if [ "${{github.event.schedule}}" == '0 0 1 1 *' ]
+          then
+            message='The Census Renewal Website is now open! It will be closed on 1 February.'
+          elif [ "${{github.event.schedule}}" == '0 0 1 2 *' ]
+          then
+            message='The Census Renewal Website has closed! It will reopen on 1 January.'
+          fi
+          elif [ "${{github.event.schedule}}" == '5 * * * *' ]
+          then
+            message='uh, hi. This could get spammy'
+          fi
+
+          if [ -n "$message" ]
+            deno run --allow-net ./sendAnnouncements.ts ${{secrets.DISCORD_ANNOUNCEMENT_WEBHOOK}} $message
+          fi
