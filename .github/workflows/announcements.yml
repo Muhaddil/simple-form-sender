@@ -50,5 +50,6 @@ jobs:
           fi
 
           if [ -n "$message" ]
+          then
             deno run --allow-net ./sendAnnouncements.ts ${{secrets.DISCORD_ANNOUNCEMENT_WEBHOOK}} $message
           fi
