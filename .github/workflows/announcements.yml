@@ -8,19 +8,12 @@ on:
     # if cron jobs are delayed for too long, they might be dropped -> bad
     - cron: '43 4 1 1 *'
     - cron: '43 4 1 2 *'
-    - cron: '*/5 * * * *'
 
 jobs:
-  announce:
+  set-visibility:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 'Checkout Repo'
-        uses: actions/checkout@v4
-
-      - name: 'Setup Deno'
-        uses: denoland/setup-deno@v1
-
       # set to public at the start of the year
       - name: 'Show Repo'
         if: github.event.schedule == '43 2 1 1 *'
@@ -35,6 +28,17 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
 
+  announce:
+    needs: set-visibility
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 'Checkout Repo'
+        uses: actions/checkout@v4
+
+      - name: 'Setup Deno'
+        uses: denoland/setup-deno@v1
 
       - name: 'Send Announcement'
         run: |
@@ -53,3 +57,38 @@ jobs:
           then
             deno run --allow-net ./.github/workflows/sendAnnouncement.ts ${{secrets.DISCORD_ANNOUNCEMENT_WEBHOOK}} "$message"
           fi
+
+  publish:
+    needs: set-visibility
+
+    if: github.event.schedule == '43 2 1 1 *'
+
+    permissions:
+      pages: write
+      id-token: write
+      actions: read
+
+    environment:
+      name: github-pages
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          ref: 'gh-pages'
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+        with:
+          enablement: true
+          token: ${{ secrets.GH_TOKEN }}
+
+      - name: Build GH Pages Artifact
+        uses: actions/upload-pages-artifact@v2
+        with:
+          path: './'
+
+      - name: Publish to GH Pages
+        uses: actions/deploy-pages@v3
