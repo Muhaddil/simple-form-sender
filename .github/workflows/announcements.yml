@@ -26,7 +26,6 @@ jobs:
           elif [ "${{github.event.schedule}}" == '43 2 1 2 *' ]
           then
             message='The Census Renewal Website has closed! It will reopen on 1 January.'
-          fi
           elif [ "${{github.event.schedule}}" == '*/5 * * * *' ]
           then
             message='uh, hi. This could get spammy'
