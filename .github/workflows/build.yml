@@ -41,5 +41,6 @@ jobs:
         with:
           folder: dist # The folder the action should deploy.
 
-      - name: Deploy
-        uses: ./.github/workflows/deploy-to-pages.yml
+  publish:
+    needs: build
+    uses: ./.github/workflows/deploy-to-pages.yml
