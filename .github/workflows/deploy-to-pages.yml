@@ -25,6 +25,8 @@ jobs:
         id: visibility
         uses: credfeto/action-repo-visibility@v1.2.0
 
+      - run: echo ${{steps.visibility.outputs.is_public}}
+
   log:
     needs: check-visibility
 
