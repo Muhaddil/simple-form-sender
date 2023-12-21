@@ -14,32 +14,7 @@ permissions:
   actions: read
 
 jobs:
-  check-visibility:
-    runs-on: ubuntu-latest
-
-    outputs:
-      public: ${{ steps.visibility.outputs.is_public }}
-
-    steps:
-      - name: Check Repo Visibility
-        id: visibility
-        uses: credfeto/action-repo-visibility@v1.2.0
-
-      - run: echo "${{steps.visibility.outputs.is_public}}"
-
-  log:
-    needs: check-visibility
-
-    runs-on: ubuntu-latest
-
-    steps:
-      - run: echo "${{needs.check-visibility.outputs.public}}"
-
   deploy:
-    needs: check-visibility
-
-    if: ${{ needs.check-visibility.outputs.public == 'true' }}
-
     environment:
       name: github-pages
 
