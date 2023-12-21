@@ -61,15 +61,3 @@ jobs:
           then
             deno run --allow-net ./.github/workflows/sendAnnouncement.ts ${{secrets.DISCORD_ANNOUNCEMENT_WEBHOOK}} "$message"
           fi
-
-  publish:
-    needs: set-visibility
-
-    if: github.event.schedule == '15 19 21 12 *'
-
-    permissions:
-      pages: write
-      id-token: write
-      actions: read
-
-    uses: ./.github/workflows/deploy-to-pages.yml

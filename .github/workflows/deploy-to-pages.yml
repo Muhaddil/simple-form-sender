@@ -2,7 +2,9 @@ name: Deploy
 
 run-name: Deploy
 
-on: workflow_call
+on:
+  - workflow_call
+  - public
 
 concurrency:
   group: 'deploy'
@@ -24,7 +26,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          ref: 'gh-pages'
+          ref: gh-pages
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
