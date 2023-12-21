@@ -15,7 +15,7 @@ permissions:
 
 jobs:
   deploy:
-    if: github.repository.visibility == 'public'
+    if: github.repository.visibility == public
 
     environment:
       name: github-pages
