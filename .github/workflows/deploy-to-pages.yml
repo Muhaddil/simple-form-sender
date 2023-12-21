@@ -25,7 +25,7 @@ jobs:
         id: visibility
         uses: credfeto/action-repo-visibility@v1.2.0
 
-      - run: echo ${{steps.visibility.outputs.is_public}}
+      - run: echo "${{steps.visibility.outputs.is_public}}"
 
   log:
     needs: check-visibility
@@ -33,7 +33,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - run: echo ${{needs.check-visibility.outputs.public}}
+      - run: echo "${{needs.check-visibility.outputs.public}}"
 
   deploy:
     needs: check-visibility
