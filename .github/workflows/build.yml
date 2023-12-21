@@ -43,4 +43,10 @@ jobs:
 
   publish:
     needs: build
+
+    permissions:
+      pages: write
+      id-token: write
+      actions: read
+
     uses: ./.github/workflows/deploy-to-pages.yml
