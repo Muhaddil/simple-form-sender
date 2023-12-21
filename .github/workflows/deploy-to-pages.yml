@@ -3,6 +3,7 @@ name: Deploy
 run-name: Deploy
 
 on:
+  workflow_dispatch:
   public:
   push:
     branches: ['gh-pages']
