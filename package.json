@@ -2,6 +2,7 @@
   "name": "eishub-census-renew",
   "version": "0.0.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "run-p type-check build-only",
@@ -16,7 +17,7 @@
     "vue": "^3.3.4"
   },
   "devDependencies": {
-    "@tsconfig/node18": "^18.2.0",
+    "@tsconfig/node20": "^20.1.2",
     "@types/node": "^20.10.5",
     "@vitejs/plugin-vue": "^4.2.3",
     "@vue/tsconfig": "^0.5.1",
