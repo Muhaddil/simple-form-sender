@@ -48,13 +48,13 @@ jobs:
         run: |
           if [ "${{github.event.schedule}}" == '15 18 21 12 *' ]
           then
-            message='The Census Renewal Website is now open! https://lenni009.github.io/EisHub-Census-Renew/ It will be closed on the 1st of February.'
+            message='The Census Renewal Website is now open! https://lenni009.github.io/Eisvana-Census-Renew/ It will be closed on the 1st of February.'
           elif [ "${{github.event.schedule}}" == '45 18 21 12 *' ]
           then
             message='The Census Renewal Website has closed! It will reopen next year on the 1st of January.'
           elif [ "${{github.event.schedule}}" == '30 18 21 12 *' ]
           then
-            message='There are 3 days left to renew your census entry! https://lenni009.github.io/EisHub-Census-Renew/'
+            message='There are 3 days left to renew your census entry! https://lenni009.github.io/Eisvana-Census-Renew/'
           fi
 
           if [ -n "$message" ]
@@ -67,32 +67,8 @@ jobs:
 
     if: github.event.schedule == '15 18 21 12 *'
 
-    permissions:
-      pages: write
-      id-token: write
-      actions: read
-
-    environment:
-      name: github-pages
-
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          ref: 'gh-pages'
-
-      - name: Setup Pages
-        uses: actions/configure-pages@v4
-        with:
-          enablement: true
-          token: ${{ secrets.GH_TOKEN }}
-
-      - name: Build GH Pages Artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: './'
-
-      - name: Publish to GH Pages
-        uses: actions/deploy-pages@v4
+      - name: Deploy to Pages
+        uses: ./.github/workflows/deploy-to-pages.yml

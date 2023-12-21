@@ -10,7 +10,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: "build"
+  group: 'build'
   cancel-in-progress: true
 
 jobs:
@@ -19,7 +19,7 @@ jobs:
 
     steps:
       - name: Checkout Repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Build App
         run: |
@@ -36,7 +36,10 @@ jobs:
           directory: dist
           overwrite: true
 
-      - name: Deploy to GitHub Pages
+      - name: Push to gh-pages
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           folder: dist # The folder the action should deploy.
+
+      - name: Deploy
+        uses: ./.github/workflows/deploy-to-pages.yml
