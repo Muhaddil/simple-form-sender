@@ -41,10 +41,6 @@ jobs:
         with:
           folder: dist # The folder the action should deploy.
 
-      - run: |
-          echo "${{github.repository.visibility}}"
-          echo "${{github.repository.private}}"
-
   publish:
     needs: build
 
