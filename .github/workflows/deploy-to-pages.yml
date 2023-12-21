@@ -25,6 +25,14 @@ jobs:
         id: visibility
         uses: credfeto/action-repo-visibility@v1.2.0
 
+  log:
+    needs: check-visibility
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - run: echo ${{needs.check-visibility.outputs.public}}
+
   deploy:
     needs: check-visibility
 

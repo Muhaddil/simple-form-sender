@@ -9,9 +9,9 @@ on:
     # - cron: '43 4 1 1 *'
     # - cron: '43 4 1 2 *'
     # - cron: '43 4 29 1 *'
-    - cron: '15 18 21 12 *'
-    - cron: '30 18 21 12 *'
-    - cron: '45 18 21 12 *'
+    - cron: '15 19 21 12 *'
+    - cron: '30 19 21 12 *'
+    - cron: '45 19 21 12 *'
 
 jobs:
   set-visibility:
@@ -20,14 +20,14 @@ jobs:
     steps:
       # set to public at the start of the year
       - name: 'Show Repo'
-        if: github.event.schedule == '15 18 21 12 *'
+        if: github.event.schedule == '15 19 21 12 *'
         run: gh repo edit ${{ github.repository }} --visibility public
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
 
       # set to private at the beginning of February
       - name: 'Hide Repo'
-        if: github.event.schedule == '45 18 21 12 *'
+        if: github.event.schedule == '45 19 21 12 *'
         run: gh repo edit ${{ github.repository }} --visibility private
         env:
           GH_TOKEN: ${{ secrets.GH_TOKEN }}
@@ -46,13 +46,13 @@ jobs:
 
       - name: 'Send Announcement'
         run: |
-          if [ "${{github.event.schedule}}" == '15 18 21 12 *' ]
+          if [ "${{github.event.schedule}}" == '15 19 21 12 *' ]
           then
             message='The Census Renewal Website is now open! https://lenni009.github.io/Eisvana-Census-Renew/ It will be closed on the 1st of February.'
-          elif [ "${{github.event.schedule}}" == '45 18 21 12 *' ]
+          elif [ "${{github.event.schedule}}" == '45 19 21 12 *' ]
           then
             message='The Census Renewal Website has closed! It will reopen next year on the 1st of January.'
-          elif [ "${{github.event.schedule}}" == '30 18 21 12 *' ]
+          elif [ "${{github.event.schedule}}" == '30 19 21 12 *' ]
           then
             message='There are 3 days left to renew your census entry! https://lenni009.github.io/Eisvana-Census-Renew/'
           fi
@@ -65,7 +65,7 @@ jobs:
   publish:
     needs: set-visibility
 
-    if: github.event.schedule == '15 18 21 12 *'
+    if: github.event.schedule == '15 19 21 12 *'
 
     permissions:
       pages: write
