@@ -15,9 +15,9 @@ const currentYear = new Date().getFullYear().toString();
 
 const confirmDialog = ref<InstanceType<typeof ConfirmDialog> | null>(null);
 
-function getLocalStorageSet() {
+function getLocalStorageSet(): Set<string> {
   const localStorageDataString = localStorage.getItem(currentYear) ?? '[]';
-  const localStorageData = JSON.parse(localStorageDataString);
+  const localStorageData: string[] = JSON.parse(localStorageDataString);
   if (!Array.isArray(localStorageData)) return new Set();
   return new Set(localStorageData);
 }

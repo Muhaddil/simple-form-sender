@@ -48,6 +48,7 @@ const filteredCensusData = computed(() =>
   >
     <UserRow
       v-for="dataObj in filteredCensusData"
+      :key="dataObj.title.CensusPlayer"
       :user-object="dataObj"
     />
   </div>
