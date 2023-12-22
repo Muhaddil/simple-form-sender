@@ -11,18 +11,32 @@ const webhook = atob(import.meta.env.VITE_DISCORD_WEBHOOK);
 const wikiLink = 'https://nomanssky.fandom.com/wiki/Special:EditPage/';
 const userName = computed(() => props.userObject.title.CensusPlayer);
 
+const currentYear = new Date().getFullYear().toString();
+
 const confirmDialog = ref<InstanceType<typeof ConfirmDialog> | null>(null);
+
+function getLocalStorageSet() {
+  const localStorageDataString = localStorage.getItem(currentYear) ?? '[]';
+  const localStorageData = JSON.parse(localStorageDataString);
+  if (!Array.isArray(localStorageData)) return new Set();
+  return new Set(localStorageData);
+}
+
+const renewed = computed(() => props.userObject.title.CensusRenewal === currentYear);
+const renewRequested = ref<boolean>(getLocalStorageSet().has(userName.value));
+
 const renewText = computed(() => {
-  if (renewRequested.value) return 'Renewal Requested';
   if (renewed.value) return 'Already Renewed';
+  if (renewRequested.value) return 'Renewal Requested';
   return 'Request Renewal';
 });
 
-const renewed = computed(() => props.userObject.title.CensusRenewal === new Date().getFullYear().toString());
-
-const renewRequested = ref<boolean>(false);
-
 async function requestRenewal() {
+  const localStorageData = getLocalStorageSet();
+  localStorageData.add(userName.value);
+  const localStorageArray = Array.from(localStorageData);
+  const localStorageDataString = JSON.stringify(localStorageArray);
+  localStorage.setItem(currentYear, localStorageDataString)
   renewRequested.value = true;
   await fetch(webhook, {
     method: 'POST',
