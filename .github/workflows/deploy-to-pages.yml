@@ -4,8 +4,10 @@ run-name: Deploy
 
 on:
   public:
-  push:
-    branches: ['gh-pages']
+  workflow_run:
+    workflows: [Build]
+    types:
+      - completed
 
 concurrency:
   group: 'deploy'
