@@ -98,9 +98,7 @@ function incrementData(userName: string) {
     <div v-else>Something went wrong :/</div>
   </template>
 
-  <template v-else>
-    <p>You tried to renew too many people. Please contact Lenni to resolve this.</p>
-  </template>
+  <p v-else>You have requested too many renewals. Please contact Lenni for help.</p>
 </template>
 
 <style lang="scss">
