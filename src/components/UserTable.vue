@@ -43,7 +43,7 @@ const filteredCensusData = computed(() =>
   censusData.value.filter((item) => item.title.CensusPlayer.toLowerCase().includes(props.filter.toLowerCase()))
 );
 
-const currentYear = '2024'; //new Date().getFullYear().toString();
+const currentYear = new Date().getFullYear().toString();
 
 function getLocalStorageData(): { requested: string[]; amount: number } {
   const localStorageDataString = localStorage.getItem(currentYear) ?? '{"requested": [], "amount": 0}';

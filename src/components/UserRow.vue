@@ -29,15 +29,15 @@ const renewText = computed(() => {
 
 async function requestRenewal() {
   if (!webhook) return;
-  // await fetch(webhook, {
-  //   method: 'POST',
-  //   headers: {
-  //     'Content-Type': 'application/json',
-  //   },
-  //   body: JSON.stringify({
-  //     content: `${userName.value} requested renewal.\n<${new URL(wikiLink + props.userObject.title.Name)}>`,
-  //   }),
-  // });
+  await fetch(webhook, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      content: `${userName.value} requested renewal.\n<${new URL(wikiLink + props.userObject.title.Name)}>`,
+    }),
+  });
   console.log('renewed', userName.value);
   renewRequested.value = true;
   emit('renew', userName.value);
