@@ -5,25 +5,21 @@ import { type QueryEntry } from '@/types/query';
 
 const props = defineProps<{
   userObject: QueryEntry;
+  tries: number;
+  currentYear: string;
+  alreadyRequested: boolean;
 }>();
+
+const emit = defineEmits(['renew']);
 
 const webhook = atob(import.meta.env.VITE_DISCORD_WEBHOOK ?? '');
 const wikiLink = 'https://nomanssky.fandom.com/wiki/Special:EditPage/';
 const userName = computed(() => props.userObject.title.CensusPlayer);
 
-const currentYear = new Date().getFullYear().toString();
-
 const confirmDialog = ref<InstanceType<typeof ConfirmDialog> | null>(null);
 
-function getLocalStorageSet(): Set<string> {
-  const localStorageDataString = localStorage.getItem(currentYear) ?? '[]';
-  const localStorageData: string[] = JSON.parse(localStorageDataString);
-  if (!Array.isArray(localStorageData)) return new Set();
-  return new Set(localStorageData);
-}
-
-const renewed = computed(() => props.userObject.title.CensusRenewal === currentYear);
-const renewRequested = ref<boolean>(getLocalStorageSet().has(userName.value));
+const renewed = computed(() => props.userObject.title.CensusRenewal === props.currentYear);
+const renewRequested = ref(props.alreadyRequested);
 
 const renewText = computed(() => {
   if (renewed.value) return 'Already Renewed';
@@ -32,22 +28,19 @@ const renewText = computed(() => {
 });
 
 async function requestRenewal() {
-  if (renewRequested.value || !webhook) return;
-  await fetch(webhook, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      content: `${userName.value} requested renewal.\n<${new URL(wikiLink + props.userObject.title.Name)}>`,
-    }),
-  });
+  if (!webhook) return;
+  // await fetch(webhook, {
+  //   method: 'POST',
+  //   headers: {
+  //     'Content-Type': 'application/json',
+  //   },
+  //   body: JSON.stringify({
+  //     content: `${userName.value} requested renewal.\n<${new URL(wikiLink + props.userObject.title.Name)}>`,
+  //   }),
+  // });
+  console.log('renewed', userName.value);
   renewRequested.value = true;
-  const localStorageData = getLocalStorageSet();
-  localStorageData.add(userName.value);
-  const localStorageArray = Array.from(localStorageData);
-  const localStorageDataString = JSON.stringify(localStorageArray);
-  localStorage.setItem(currentYear, localStorageDataString);
+  emit('renew', userName.value);
 }
 
 const openDialog = () => confirmDialog.value?.toggleModal();
@@ -57,7 +50,7 @@ const openDialog = () => confirmDialog.value?.toggleModal();
   <ConfirmDialog
     :user-name="userName"
     ref="confirmDialog"
-    @confirm="requestRenewal"
+    @confirm.once="requestRenewal"
   />
   <div>{{ userName }}</div>
   <button

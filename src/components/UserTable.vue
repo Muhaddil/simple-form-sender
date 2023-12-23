@@ -7,6 +7,8 @@ const props = defineProps<{
   filter: string;
 }>();
 
+const emit = defineEmits(['exceeded']);
+
 const apiPath = 'https://nomanssky.fandom.com/api.php';
 const action = 'cargoquery';
 const format = 'json';
@@ -24,6 +26,7 @@ const censusQuery = `${apiPath}?action=${action}&format=${format}&origin=${origi
 
 const censusData = ref<QueryEntry[]>([]);
 const requestFailed = ref<boolean>(false);
+const tries = ref(getLocalStorageAmount());
 
 onMounted(async () => {
   try {
@@ -39,26 +42,66 @@ onMounted(async () => {
 const filteredCensusData = computed(() =>
   censusData.value.filter((item) => item.title.CensusPlayer.toLowerCase().includes(props.filter.toLowerCase()))
 );
+
+const currentYear = '2024'; //new Date().getFullYear().toString();
+
+function getLocalStorageData(): { requested: string[]; amount: number } {
+  const localStorageDataString = localStorage.getItem(currentYear) ?? '{"requested": [], "amount": 0}';
+  return JSON.parse(localStorageDataString);
+}
+
+function getLocalStorageSet(): Set<string> {
+  const localStorageData = getLocalStorageData();
+  if (!Array.isArray(localStorageData.requested)) return new Set();
+  return new Set(localStorageData.requested);
+}
+
+function getLocalStorageAmount(): number {
+  const localStorageData = getLocalStorageData();
+  return typeof localStorageData.amount === 'number' ? localStorageData.amount : 0;
+}
+
+function incrementData(userName: string) {
+  tries.value++;
+  const localStorageData = getLocalStorageData();
+  const localStorageDataSet = getLocalStorageSet();
+  localStorageDataSet.add(userName);
+  const localStorageArray = Array.from(localStorageDataSet);
+  localStorageData.requested = localStorageArray;
+  localStorageData.amount = tries.value;
+  const localStorageDataString = JSON.stringify(localStorageData);
+  localStorage.setItem(currentYear, localStorageDataString);
+}
 </script>
 
 <template>
-  <div
-    v-if="censusData.length"
-    class="table"
-  >
-    <UserRow
-      v-for="dataObj in filteredCensusData"
-      :key="dataObj.title.CensusPlayer"
-      :user-object="dataObj"
-    />
-  </div>
+  <template v-if="tries < 3">
+    <div
+      v-if="censusData.length"
+      class="table"
+    >
+      <UserRow
+        v-for="dataObj in filteredCensusData"
+        :key="dataObj.title.CensusPlayer"
+        :user-object="dataObj"
+        :tries="tries"
+        :current-year="currentYear"
+        :already-requested="getLocalStorageSet().has(dataObj.title.CensusPlayer)"
+        @renew="incrementData"
+      />
+    </div>
 
-  <div
-    v-else-if="!requestFailed"
-    aria-busy="true"
-  ></div>
+    <div
+      v-else-if="!requestFailed"
+      aria-busy="true"
+    ></div>
 
-  <div v-else>Something went wrong :/</div>
+    <div v-else>Something went wrong :/</div>
+  </template>
+
+  <template v-else>
+    <p>You tried to renew too many people. Please contact Lenni to resolve this.</p>
+  </template>
 </template>
 
 <style lang="scss">

@@ -5,6 +5,8 @@ import UserTable from './components/UserTable.vue';
 const filter = ref<string>('');
 
 const missingWebhook = !import.meta.env.VITE_DISCORD_WEBHOOK;
+
+const tooManyTries = ref(false);
 </script>
 
 <template>
@@ -13,15 +15,24 @@ const missingWebhook = !import.meta.env.VITE_DISCORD_WEBHOOK;
   </header>
 
   <main>
-    <p v-if="missingWebhook" class="warning">No Webhook URL found, no message will be sent!</p>
+    <p
+      v-if="missingWebhook"
+      class="warning"
+    >
+      No Webhook URL found, no message will be sent!
+    </p>
     <input
+      v-if="tooManyTries"
       placeholder="Search Name"
       type="text"
       name="searchBar"
       id="searchBar"
       v-model="filter"
     />
-    <UserTable :filter="filter" />
+    <UserTable
+      :filter="filter"
+      @exceeded="tooManyTries = true"
+    />
   </main>
 </template>
 
@@ -35,6 +46,6 @@ const missingWebhook = !import.meta.env.VITE_DISCORD_WEBHOOK;
   background-color: red;
   color: white;
   border-radius: var(--border-radius);
-  padding: .5rem;
+  padding: 0.5rem;
 }
 </style>
