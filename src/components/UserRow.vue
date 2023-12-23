@@ -7,7 +7,7 @@ const props = defineProps<{
   userObject: QueryEntry;
 }>();
 
-const webhook = atob(import.meta.env.VITE_DISCORD_WEBHOOK || '');
+const webhook = atob(import.meta.env.VITE_DISCORD_WEBHOOK ?? '');
 const wikiLink = 'https://nomanssky.fandom.com/wiki/Special:EditPage/';
 const userName = computed(() => props.userObject.title.CensusPlayer);
 
