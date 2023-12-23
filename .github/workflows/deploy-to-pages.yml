@@ -16,7 +16,6 @@ concurrency:
 permissions:
   pages: write
   id-token: write
-  actions: read
 
 jobs:
   deploy:
