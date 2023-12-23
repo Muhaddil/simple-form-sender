@@ -24,6 +24,7 @@ const censusQuery = `${apiPath}?action=${action}&format=${format}&origin=${origi
   '%2C%20'
 )}&where=${where}&order_by=${orderBy}`;
 
+const currentYear = new Date().getFullYear().toString();
 const censusData = ref<QueryEntry[]>([]);
 const requestFailed = ref<boolean>(false);
 const tries = ref(getLocalStorageAmount());
@@ -42,8 +43,6 @@ onMounted(async () => {
 const filteredCensusData = computed(() =>
   censusData.value.filter((item) => item.title.CensusPlayer.toLowerCase().includes(props.filter.toLowerCase()))
 );
-
-const currentYear = new Date().getFullYear().toString();
 
 function getLocalStorageData(): { requested: string[]; amount: number } {
   const localStorageDataString = localStorage.getItem(currentYear) ?? '{"requested": [], "amount": 0}';

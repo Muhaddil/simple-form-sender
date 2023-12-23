@@ -22,7 +22,7 @@ const tooManyTries = ref(false);
       No Webhook URL found, no message will be sent!
     </p>
     <input
-      v-if="tooManyTries"
+      v-if="!tooManyTries"
       placeholder="Search Name"
       type="text"
       name="searchBar"
