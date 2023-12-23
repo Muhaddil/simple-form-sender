@@ -21,18 +21,20 @@ const tooManyTries = ref(false);
     >
       No Webhook URL found, no message will be sent!
     </p>
-    <input
-      v-if="!tooManyTries"
-      id="searchBar"
-      name="searchBar"
-      placeholder="Search Name"
-      type="text"
-      v-model="filter"
-    />
-    <UserTable
-      :filter="filter"
-      @exceeded="tooManyTries = true"
-    />
+    <template v-if="!tooManyTries">
+      <input
+        id="searchBar"
+        name="searchBar"
+        placeholder="Search Name"
+        type="text"
+        v-model="filter"
+      />
+      <UserTable
+        :filter="filter"
+        @exceeded="tooManyTries = true"
+      />
+    </template>
+    <p v-else>You have requested too many renewals. Please contact Lenni on Discord for help.</p>
   </main>
 </template>
 

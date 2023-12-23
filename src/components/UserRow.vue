@@ -28,7 +28,7 @@ const renewText = computed(() => {
 });
 
 async function requestRenewal() {
-  if (!webhook) return;
+  if (renewRequested.value || !webhook) return;
   await fetch(webhook, {
     method: 'POST',
     headers: {
