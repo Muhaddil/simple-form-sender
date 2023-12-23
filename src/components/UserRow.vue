@@ -32,13 +32,7 @@ const renewText = computed(() => {
 });
 
 async function requestRenewal() {
-  const localStorageData = getLocalStorageSet();
-  localStorageData.add(userName.value);
-  const localStorageArray = Array.from(localStorageData);
-  const localStorageDataString = JSON.stringify(localStorageArray);
-  localStorage.setItem(currentYear, localStorageDataString)
-  renewRequested.value = true;
-  if (!webhook) return;
+  if (renewRequested.value || !webhook) return;
   await fetch(webhook, {
     method: 'POST',
     headers: {
@@ -48,6 +42,12 @@ async function requestRenewal() {
       content: `${userName.value} requested renewal.\n<${new URL(wikiLink + props.userObject.title.Name)}>`,
     }),
   });
+  renewRequested.value = true;
+  const localStorageData = getLocalStorageSet();
+  localStorageData.add(userName.value);
+  const localStorageArray = Array.from(localStorageData);
+  const localStorageDataString = JSON.stringify(localStorageArray);
+  localStorage.setItem(currentYear, localStorageDataString);
 }
 
 const openDialog = () => confirmDialog.value?.toggleModal();
