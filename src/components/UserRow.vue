@@ -54,10 +54,10 @@ const openDialog = () => confirmDialog.value?.toggleModal();
   />
   <div>{{ userName }}</div>
   <button
+    :disabled="renewed || renewRequested"
     ref="renewButton"
     type="button"
     @click="openDialog"
-    :disabled="renewed || renewRequested"
   >
     {{ renewText }}
   </button>

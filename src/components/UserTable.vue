@@ -81,11 +81,11 @@ function incrementData(userName: string) {
     >
       <UserRow
         v-for="dataObj in filteredCensusData"
-        :key="dataObj.title.CensusPlayer"
-        :user-object="dataObj"
-        :tries="tries"
-        :current-year="currentYear"
         :already-requested="getLocalStorageSet().has(dataObj.title.CensusPlayer)"
+        :current-year="currentYear"
+        :key="dataObj.title.CensusPlayer"
+        :tries="tries"
+        :user-object="dataObj"
         @renew="incrementData"
       />
     </div>

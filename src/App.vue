@@ -23,10 +23,10 @@ const tooManyTries = ref(false);
     </p>
     <input
       v-if="!tooManyTries"
+      id="searchBar"
+      name="searchBar"
       placeholder="Search Name"
       type="text"
-      name="searchBar"
-      id="searchBar"
       v-model="filter"
     />
     <UserTable
