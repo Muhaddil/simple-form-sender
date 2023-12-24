@@ -11,7 +11,7 @@ const tooManyTries = ref(false);
 
 <template>
   <header>
-    <h1 class="title">Eisvana Census Renewal</h1>
+    <h1 class="title">Renovación del censo de la Royal Space Society</h1>
   </header>
 
   <main>
@@ -19,7 +19,7 @@ const tooManyTries = ref(false);
       v-if="missingWebhook"
       class="warning"
     >
-      No Webhook URL found, no message will be sent!
+    No se encontró ninguna URL de algún webhook, ¡no se enviará ningún mensaje!
     </p>
     <template v-if="!tooManyTries">
       <input
@@ -34,7 +34,7 @@ const tooManyTries = ref(false);
         @exceeded="tooManyTries = true"
       />
     </template>
-    <p v-else>You have requested too many renewals. Please contact Lenni on Discord for help.</p>
+    <p v-else>Ha solicitado demasiadas renovaciones. Comuníquese con Muhaddil en Discord para obtener ayuda.</p>
   </main>
 </template>
 

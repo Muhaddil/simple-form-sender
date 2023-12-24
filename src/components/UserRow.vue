@@ -22,9 +22,9 @@ const renewed = computed(() => props.userObject.title.CensusRenewal === props.cu
 const renewRequested = ref(props.alreadyRequested);
 
 const renewText = computed(() => {
-  if (renewed.value) return 'Already Renewed';
-  if (renewRequested.value) return 'Renewal Requested';
-  return 'Request Renewal';
+  if (renewed.value) return 'Ya renovada';
+  if (renewRequested.value) return 'Renovación solicitada';
+  return 'Solicitar renovación';
 });
 
 async function requestRenewal() {
@@ -35,7 +35,7 @@ async function requestRenewal() {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      content: `${userName.value} requested renewal.\n<${new URL(wikiLink + props.userObject.title.Name)}>`,
+      content: `${userName.value} solicito renovación.\n<${new URL(wikiLink + props.userObject.title.Name)}>`,
     }),
   });
   console.log('renewed', userName.value);

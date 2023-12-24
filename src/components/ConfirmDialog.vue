@@ -29,13 +29,13 @@ defineExpose({
             class="close"
           ></button>
         </form>
-        Confirm renewal of {{ userName }}?
+        ¿Confirmar la renovación de {{ userName }}?
       </header>
       <form
         method="dialog"
         class="confirm-options"
       >
-        <button @click="$emit('confirm')">Yes</button>
+        <button @click="$emit('confirm')">Si</button>
         <button class="secondary">No</button>
       </form>
     </article>

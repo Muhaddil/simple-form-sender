@@ -10,7 +10,7 @@ const props = defineProps<{
 const emit = defineEmits(['exceeded']);
 
 const apiPath = 'https://nomanssky.fandom.com/api.php';
-const civilized = 'Eisvana';
+const civilized = 'Royal Space Society';
 const query = {
   action: 'cargoquery',
   format: 'json',
@@ -101,7 +101,7 @@ watchEffect(() => {
     aria-busy="true"
   ></div>
 
-  <div v-else>Something went wrong :/</div>
+  <div v-else>Algo salió mal:/</div>
 </template>
 
 <style lang="scss">
