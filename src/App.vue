@@ -11,7 +11,7 @@ const tooManyTries = ref(false);
 
 <template>
   <header>
-    <h1 class="title">Renovación del censo de la Royal Space Society</h1>
+    <h1 class="title">Renovación de versión de las páginas de la Royal Space Society</h1>
   </header>
 
   <main>
