@@ -92,7 +92,11 @@ function resetForm() {
 
 <template>
   <div class="form-container">
-    <!-- <h1>Formulario SAMS 3</h1> -->
+    <div class="logo-container">
+      <a href="https://discord.gg/5a2PCNN9gy">
+      <img src="https://raw.githubusercontent.com/Muhaddil/simple-link-randomizer/refs/heads/main/images/SAEDLogo.png" alt="Logo SAED" class="saed-logo" />
+    </a>
+    </div>
     <form @submit.prevent="handleSubmit">
       <div class="form-field">
         <label for="name">Nombre y Apellidos IC</label>
@@ -166,6 +170,111 @@ function resetForm() {
 </template>
 
 <style scoped>
+.form-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.365);
+  border-radius: 10px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 4s ease-out;
+}
+
+.logo-container {
+  text-align: center;
+  margin-bottom: 30px;
+  animation: pulse 2s infinite ease-in-out;
+}
+
+.saed-logo {
+  width: 150px;
+  height: auto;
+  transition: transform 0.3s ease-in-out;
+}
+
+.saed-logo:hover {
+  transform: scale(1.1);
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  font-weight: bold;
+  margin-bottom: 5px;
+  transition: color 0.3s ease;
+  font-family: 'Times New Roman', Times, serif;
+}
+
+label:hover {
+  color: #007BFF;
+}
+
+input, textarea {
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+  background-color: #222;
+  color: #fff;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+input:focus, textarea:focus {
+  border-color: #007BFF;
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+  outline: none;
+}
+
+input:hover, textarea:hover {
+  border-color: #007BFF;
+  box-shadow: 0 0 10px rgba(0, 123, 255, 0.3);
+}
+
+button {
+  padding: 12px 18px;
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+button:hover {
+  background-color: #0056b3;
+  transform: translateY(-3px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+button:active {
+  transform: translateY(1px);
+  box-shadow: none;
+}
+
 .toast {
   position: fixed;
   bottom: 20px;
@@ -174,18 +283,18 @@ function resetForm() {
   padding: 15px;
   background-color: #333;
   color: white;
-  border-radius: 5px;
+  border-radius: 8px;
   font-size: 16px;
   opacity: 0;
   animation: fadeInOut 5s forwards;
 }
 
 .toast.success {
-  background-color: green;
+  background-color: #28a745;
 }
 
 .toast.error {
-  background-color: red;
+  background-color: #dc3545;
 }
 
 @keyframes fadeInOut {
@@ -200,6 +309,15 @@ function resetForm() {
   }
   100% {
     opacity: 0;
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
   }
 }
 </style>

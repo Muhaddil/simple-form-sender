@@ -27,6 +27,7 @@ const RouteComponent = defineAsyncComponent<Component>({
 
 <style scoped lang="scss">
 .title {
+  font-family: 'Times New Roman', Times, serif;
   margin-block-end: 2rem;
   text-align: center;
 }
