@@ -186,7 +186,7 @@ function resetForm() {
 
 <style scoped>
 .form-container {
-  max-width: 800px;
+  max-width: 80%;
   margin: 0 auto;
   padding: 20px;
   background-color: rgba(0, 0, 0, 0.365);
