@@ -9,6 +9,12 @@ export default defineConfig({
 	plugins: [
 		vue(),
 	],
+  build: {
+    target: 'ESNext',
+    rollupOptions: {
+      input: ['index.html', 'form1.html', 'form2.html', 'form3.html'],
+    },
+  },
 	resolve: {
 		alias: {
 			'@': fileURLToPath(new URL('./src', import.meta.url))

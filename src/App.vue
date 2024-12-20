@@ -2,6 +2,8 @@
 import { defineAsyncComponent, type Component } from 'vue';
 const missingWebhook = !import.meta.env.VITE_DISCORD_WEBHOOK;
 import { componentName, pageformattedName } from '@/types/route';
+import Router from './components/Router.vue';
+
 
 const RouteComponent = defineAsyncComponent<Component>({
   loader: () => import(`./components/${componentName}.vue`),
@@ -18,7 +20,7 @@ const RouteComponent = defineAsyncComponent<Component>({
     <p v-if="missingWebhook" class="warning">
       No se encontró ninguna URL de algún webhook, ¡no se enviará ningún mensaje!
     </p>
-
+    <Router />
     <RouteComponent />
   </main>
 </template>
