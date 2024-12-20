@@ -1,40 +1,25 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import UserTable from './components/UserTable.vue';
-
-const filter = ref<string>('');
-
+import { defineAsyncComponent, type Component } from 'vue';
 const missingWebhook = !import.meta.env.VITE_DISCORD_WEBHOOK;
+import { componentName, pageformattedName } from '@/types/route';
 
-const tooManyTries = ref(false);
+const RouteComponent = defineAsyncComponent<Component>({
+  loader: () => import(`./components/${componentName}.vue`),
+});
+
 </script>
 
 <template>
   <header>
-    <h1 class="title">Renovación de versión de las páginas de la Royal Space Society</h1>
+    <h1 class="title">{{ pageformattedName === 'Home' ? '' : `${pageformattedName}` }}</h1>
   </header>
 
   <main>
-    <p
-      v-if="missingWebhook"
-      class="warning"
-    >
-    No se encontró ninguna URL de algún webhook, ¡no se enviará ningún mensaje!
+    <p v-if="missingWebhook" class="warning">
+      No se encontró ninguna URL de algún webhook, ¡no se enviará ningún mensaje!
     </p>
-    <template v-if="!tooManyTries">
-      <input
-        id="searchBar"
-        name="searchBar"
-        placeholder="Search Name"
-        type="text"
-        v-model="filter"
-      />
-      <UserTable
-        :filter="filter"
-        @exceeded="tooManyTries = true"
-      />
-    </template>
-    <p v-else>Ha solicitado demasiadas renovaciones. Comuníquese con Muhaddil en Discord para obtener ayuda.</p>
+
+    <RouteComponent />
   </main>
 </template>
 
