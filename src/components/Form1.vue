@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 
-const webhook = import.meta.env.VITE_DISCORD_WEBHOOK ?? '';
+const webhook = atob(import.meta.env.VITE_DISCORD_WEBHOOK ?? '');
 
 const name = ref('');
 const ageIC = ref('');
@@ -23,7 +23,7 @@ const errorMessage = ref('');
 
 async function handleSubmit() {
   const payload = {
-    content: `# Nuevo mensaje del formulario:
+    content: `# Nueva Respuesta Formulario SAMS 1:
 
     - **Nombre y Apellidos IC:** ${name.value}
     - **Edad IC:** ${ageIC.value}
