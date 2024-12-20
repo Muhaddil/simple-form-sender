@@ -32,7 +32,7 @@ jobs:
           touch .nojekyll
 
       - name: Minify Code
-        uses: Muhaddil/minify-js
+        uses: Muhaddil/minify-js@main
         with:
           directory: dist
           overwrite: true
