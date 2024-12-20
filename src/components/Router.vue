@@ -2,12 +2,9 @@
 import { storeToRefs } from 'pinia';
 import { useRouteDataStore } from '@/stores/routeDataStore';
 import { defineAsyncComponent, type Component } from 'vue';
-import { useRequestStore } from '@/stores/requestStore';
 
 const routeData = useRouteDataStore();
 const { route } = storeToRefs(routeData);
-
-const requestData = useRequestStore();
 
 interface RouterObj {
   component: string;
@@ -23,9 +20,7 @@ const router: Record<string, RouterObj> = {
 
 const routeComponentObj = getRouteComponent();
 
-const RouteComponent = defineAsyncComponent<Component>(() => import(`../pages/${routeComponentObj.component}.vue`));
-
-if (routeComponentObj.requiresData) requestData.getCensusData();
+const RouteComponent = defineAsyncComponent<Component>(() => import(`./${routeComponentObj.component}.vue`));
 
 function getRouteComponent() {
   const currentRoute = route.value;
