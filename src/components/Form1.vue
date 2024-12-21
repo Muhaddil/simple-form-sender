@@ -23,6 +23,8 @@ const errorMessage = ref('');
 
 async function handleSubmit() {
   const payload = {
+    username: "Muhaddil Form Sender",
+    avatar_url: "https://github.com/Muhaddil/RSSWikiPageCreator/blob/main/public/assets/other/MuhaddilOG.png?raw=true",
     content: `# Nueva Respuesta Formulario SAMS 1:
 
     - **Nombre y Apellidos IC:** ${name.value}
