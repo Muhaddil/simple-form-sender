@@ -20,7 +20,9 @@ const router: Record<string, RouterObj> = {
 
 const routeComponentObj = getRouteComponent();
 
-const RouteComponent = defineAsyncComponent<Component>(() => import(`./${routeComponentObj.component}.vue`));
+const RouteComponent = defineAsyncComponent<Component>(() =>
+  import(/* @vite-ignore */ `./${routeComponentObj.component}.vue`)
+);
 
 function getRouteComponent() {
   const currentRoute = route.value;

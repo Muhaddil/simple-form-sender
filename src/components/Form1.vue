@@ -92,11 +92,11 @@ function resetForm() {
 
 <template>
   <div class="form-container">
-    <div class="logo-container">
+    <!-- <div class="logo-container">
       <a href="https://discord.gg/5a2PCNN9gy">
       <img src="https://raw.githubusercontent.com/Muhaddil/simple-link-randomizer/refs/heads/main/images/SAEDLogo.png" alt="Logo SAED" class="saed-logo" />
     </a>
-    </div>
+    </div> -->
     <form @submit.prevent="handleSubmit" class="form">
       <div class="form-field">
         <label for="name">Nombre y Apellidos IC</label>
