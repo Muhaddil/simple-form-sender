@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import { ref } from 'vue';
+import FormField from './FormField.vue';
+import FormTextarea from './FormTextarea.vue';
+import '../css/style.scss';
 
 const webhook = atob(import.meta.env.VITE_DISCORD_WEBHOOK ?? '');
 
@@ -93,233 +96,26 @@ function resetForm() {
 </script>
 
 <template>
-  <div class="form-container">
-    <!-- <div class="logo-container">
-      <a href="https://discord.gg/5a2PCNN9gy">
-      <img src="https://raw.githubusercontent.com/Muhaddil/simple-link-randomizer/refs/heads/main/images/SAEDLogo.png" alt="Logo SAED" class="saed-logo" />
-    </a>
-    </div> -->
+  <div :class="['form-container']">
     <form @submit.prevent="handleSubmit" class="form">
-      <div class="form-field">
-        <label for="name">Nombre y Apellidos IC</label>
-        <input v-model="name" type="text" id="name" name="name" placeholder="Ingresa tu nombre y apellidos IC" required />
-      </div>
-      <div class="form-field">
-        <label for="ageIC">Edad IC</label>
-        <input v-model="ageIC" type="text" id="ageIC" name="ageIC" placeholder="Ingresa tu edad IC" required :maxlength="2" pattern="\d*" />
-      </div>
-      <div class="form-field">
-        <label for="ageOOC">Edad OOC</label>
-        <input v-model="ageOOC" type="text" id="ageOOC" name="ageOOC" placeholder="Ingresa tu edad OOC" required :maxlength="2" pattern="\d*" />
-      </div>
-      <div class="form-field">
-        <label for="discordId">ID de Discord</label>
-        <input v-model="discordId" type="text" id="discordId" name="discordId" placeholder="Ingresa tu ID de Discord" required />
-      </div>
-      <div class="form-field">
-        <label for="steamUrl">URL de Steam</label>
-        <input v-model="steamUrl" type="url" id="steamUrl" name="steamUrl" placeholder="Ingresa tu URL de Steam" required />
-      </div>
-      <div class="form-field">
-        <label for="dailyTime">Tiempo Disponible Diario</label>
-        <input v-model="dailyTime" type="text" id="dailyTime" name="dailyTime" placeholder="Ejemplo: 2 horas diarias" required />
-      </div>
-      <div class="form-field">
-        <label for="emsRoleKnowledge">Conocimiento del Rol de EMS</label>
-        <textarea v-model="emsRoleKnowledge" id="emsRoleKnowledge" name="emsRoleKnowledge" placeholder="Describe tu conocimiento sobre el rol de EMS" required></textarea>
-      </div>
-      <div class="form-field">
-        <label for="previousExperiences">Experiencias en Otras Ciudades</label>
-        <textarea v-model="previousExperiences" id="previousExperiences" name="previousExperiences" placeholder="Describe tus experiencias previas" required></textarea>
-      </div>
-      <div class="form-field">
-        <label for="whyChooseMe">¿Por qué deberíamos elegirte?</label>
-        <textarea v-model="whyChooseMe" id="whyChooseMe" name="whyChooseMe" placeholder="Explica por qué deberíamos elegirte" required></textarea>
-      </div>
-      <div class="form-field">
-        <label for="exampleMe">Ejemplo de /me</label>
-        <textarea v-model="exampleMe" id="exampleMe" name="exampleMe" placeholder="Proporciona un ejemplo de /me" required></textarea>
-      </div>
-      <div class="form-field">
-        <label for="exampleDo">Ejemplo de /do</label>
-        <textarea v-model="exampleDo" id="exampleDo" name="exampleDo" placeholder="Proporciona un ejemplo de /do" required></textarea>
-      </div>
-      <div class="form-field">
-        <label for="medicationForInfection">¿Qué medicamentos usarías para una infección?</label>
-        <textarea v-model="medicationForInfection" id="medicationForInfection" name="medicationForInfection" placeholder="Describe los medicamentos que usarías" required></textarea>
-      </div>
-      <div class="form-field">
-        <label for="defineDM">Define DM</label>
-        <textarea v-model="defineDM" id="defineDM" name="defineDM" placeholder="Define DM con tus palabras" required></textarea>
-      </div>
-      <div class="form-field">
-        <label for="definePG">Define PG</label>
-        <textarea v-model="definePG" id="definePG" name="definePG" placeholder="Define PG con tus palabras" required></textarea>
-      </div>
-      <div class="form-field">
-        <label for="defineCarjack">Define Carjack</label>
-        <textarea v-model="defineCarjack" id="defineCarjack" name="defineCarjack" placeholder="Define Carjack con tus palabras" required></textarea>
-      </div>
+      <FormField id="name" label="Nombre y Apellidos IC" type="text" placeholder="Ingresa tu nombre y apellidos IC" v-model="name" required />
+      <FormField id="ageIC" label="Edad IC" type="text" placeholder="Ingresa tu edad IC" v-model="ageIC" required :maxlength="2" />
+      <FormField id="ageOOC" label="Edad OOC" type="text" placeholder="Ingresa tu edad OOC" v-model="ageOOC" required :maxlength="2" />
+      <FormField id="discordId" label="ID de Discord" type="text" placeholder="Ingresa tu ID de Discord" v-model="discordId" required />
+      <FormField id="steamUrl" label="URL de Steam" type="url" placeholder="Ingresa tu URL de Steam" v-model="steamUrl" required />
+      <FormField id="dailyTime" label="Tiempo Disponible Diario" type="text" placeholder="Ejemplo: 2 horas diarias" v-model="dailyTime" required />
+      <FormTextarea id="emsRoleKnowledge" label="Conocimiento del Rol de EMS" placeholder="Describe tu conocimiento sobre el rol de EMS" v-model="emsRoleKnowledge" required />
+      <FormTextarea id="previousExperiences" label="Experiencias en Otras Ciudades" placeholder="Describe tus experiencias previas" v-model="previousExperiences" required />
+      <FormTextarea id="whyChooseMe" label="¿Por qué deberíamos elegirte?" placeholder="Explica por qué deberíamos elegirte" v-model="whyChooseMe" required />
+      <FormTextarea id="exampleMe" label="Ejemplo de /me" placeholder="Proporciona un ejemplo de /me" v-model="exampleMe" required />
+      <FormTextarea id="exampleDo" label="Ejemplo de /do" placeholder="Proporciona un ejemplo de /do" v-model="exampleDo" required />
+      <FormTextarea id="medicationForInfection" label="¿Qué medicamentos usarías para una infección?" placeholder="Describe los medicamentos que usarías" v-model="medicationForInfection" required />
+      <FormTextarea id="defineDM" label="Define DM" placeholder="Define DM con tus palabras" v-model="defineDM" required />
+      <FormTextarea id="definePG" label="Define PG" placeholder="Define PG con tus palabras" v-model="definePG" required />
+      <FormTextarea id="defineCarjack" label="Define Carjack" placeholder="Define Carjack con tus palabras" v-model="defineCarjack" required />
       <button type="submit">Enviar</button>
     </form>
-    <div v-if="successMessage" class="toast success">
-      {{ successMessage }}
-    </div>
-    <div v-if="errorMessage" class="toast error">
-      {{ errorMessage }}
-    </div>
+    <div v-if="successMessage" class="toast success">{{ successMessage }}</div>
+    <div v-if="errorMessage" class="toast error">{{ errorMessage }}</div>
   </div>
 </template>
-
-<style scoped>
-.form-container {
-  max-width: 80%;
-  margin: 0 auto;
-  padding: 20px;
-  background-color: rgba(0, 0, 0, 0.365);
-  border-radius: 10px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-  animation: fadeIn 4s ease-out;
-}
-
-.logo-container {
-  text-align: center;
-  margin-bottom: 30px;
-  animation: pulse 2s infinite ease-in-out;
-}
-
-.saed-logo {
-  width: 150px;
-  height: auto;
-  transition: transform 0.3s ease-in-out;
-}
-
-.saed-logo:hover {
-  transform: scale(1.1);
-}
-
-@keyframes pulse {
-  0% {
-    transform: scale(1);
-  }
-  50% {
-    transform: scale(1.05);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
-
-.form {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.form-field {
-  display: flex;
-  flex-direction: column;
-}
-
-label {
-  font-weight: bold;
-  margin-bottom: 5px;
-  transition: color 0.3s ease;
-  font-family: 'Times New Roman', Times, serif;
-}
-
-label:hover {
-  color: #007BFF;
-}
-
-input, textarea {
-  padding: 12px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  font-size: 16px;
-  background-color: #222;
-  color: #fff;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-}
-
-input:focus, textarea:focus {
-  border-color: #007BFF;
-  box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
-  outline: none;
-}
-
-input:hover, textarea:hover {
-  border-color: #007BFF;
-  box-shadow: 0 0 10px rgba(0, 123, 255, 0.3);
-}
-
-button {
-  padding: 12px 18px;
-  background-color: #007BFF;
-  color: white;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-size: 16px;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-}
-
-button:hover {
-  background-color: #0056b3;
-  transform: translateY(-3px);
-  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
-}
-
-button:active {
-  transform: translateY(1px);
-  box-shadow: none;
-}
-
-.toast {
-  position: fixed;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  padding: 15px;
-  background-color: #333;
-  color: white;
-  border-radius: 8px;
-  font-size: 16px;
-  opacity: 0;
-  animation: fadeInOut 5s forwards;
-}
-
-.toast.success {
-  background-color: #28a745;
-}
-
-.toast.error {
-  background-color: #dc3545;
-}
-
-@keyframes fadeInOut {
-  0% {
-    opacity: 0;
-  }
-  20% {
-    opacity: 1;
-  }
-  80% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-  }
-}
-
-@keyframes fadeIn {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-</style>

@@ -4,6 +4,7 @@ export const router: Record<string, string> = {
   form1: 'Form1',
   form2: 'Form2',
   form3: 'Form3',
+  trasladosform: 'TrasladosForm',
 };
 
 export const route = getCurrentRoute();
@@ -20,6 +21,9 @@ switch (route) {
     break;
   case 'form3':
     exportName = 'Formulario SAMS 3';
+    break;
+  case 'trasladosform':
+    exportName = 'Formulario Traslados SAED';
     break;
   case '':
     exportName = 'Home';

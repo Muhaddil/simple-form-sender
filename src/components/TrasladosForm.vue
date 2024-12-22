@@ -23,19 +23,24 @@ const defineFairPlay = ref('');
 const pseudoICTerm = ref('');
 const successMessage = ref('');
 const errorMessage = ref('');
+const faction = ref('');
 
 async function handleSubmit() {
   const payload = {
     username: 'Muhaddil Form Sender',
     avatar_url:
       'https://github.com/Muhaddil/RSSWikiPageCreator/blob/main/public/assets/other/MuhaddilOG.png?raw=true',
-    content: `# Nueva Respuesta Formulario SAMS 2:
+    content: `# Nueva Respuesta Formulario Traslados SAED:
 
-    - **Nombre y Apellidos IC:** ${name.value}
-    - **Edad IC:** ${ageIC.value}
-    - **Edad OOC:** ${ageOOC.value}
+    - **Nombre de Discord:** ${name.value}
     - **ID de Discord:** ${discordId.value}
     - **URL de Steam:** ${steamUrl.value}
+    - **Edad OOC:** ${ageOOC.value}
+    - **Facción:** ${faction.value}
+
+
+
+    - **Edad IC:** ${ageIC.value}
     - **Tiempo Disponible Diario:** ${dailyTime.value}
     - **Conocimiento del Rol de EMS:** ${emsRoleKnowledge.value}
     - **Experiencias en Otras Ciudades:** ${previousExperiences.value}

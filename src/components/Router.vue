@@ -15,6 +15,7 @@ const router: Record<string, RouterObj> = {
   form1: { component: 'Form1', requiresData: false },
   form2: { component: 'Form2', requiresData: true },
   form3: { component: 'Form3', requiresData: true },
+  trasladosform: { component: 'TrasladosForm', requiresData: true },
   index: { component: 'Home', requiresData: false },
 };
 
