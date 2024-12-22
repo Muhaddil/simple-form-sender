@@ -12,7 +12,7 @@ export default defineConfig({
   build: {
     target: 'ESNext',
     rollupOptions: {
-      input: ['index.html', 'form1.html', 'form2.html', 'form3.html', 'traslados.html'],
+      input: ['index.html', 'form1.html', 'form2.html', 'form3.html', 'trasladosform.html'],
     },
   },
 	resolve: {
