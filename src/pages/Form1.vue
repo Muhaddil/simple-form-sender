@@ -40,7 +40,7 @@ async function handleSubmit() {
     `- **Define DM:** ${defineDM.value}`,
     `- **Define PG:** ${definePG.value}`,
     `- **Define Carjack:** ${defineCarjack.value}`,
-    ];
+  ];
 
   try {
     await sendToDiscord(payloadSections);
@@ -67,30 +67,47 @@ async function sendToDiscord(sections: string[]) {
   const avatar_url = '@/images/muha2.png';
 
   for (const section of sections) {
-    if (messageBuffer.length + section.length + 2 > maxMessageLength) {
-      await sendMessageToWebhook(messageBuffer, username, avatar_url);
+    if (messageBuffer.length + section.length + 1 > maxMessageLength) {
+      await sendMessageToWebhook(messageBuffer.trim(), username, avatar_url);
       messageBuffer = section + '\n';
     } else {
       messageBuffer += section + '\n';
     }
   }
 
-  if (messageBuffer.length > 0) {
-    await sendMessageToWebhook(messageBuffer, username, avatar_url);
+  if (messageBuffer.trim().length > 0) {
+    await sendMessageToWebhook(messageBuffer.trim(), username, avatar_url);
   }
 }
 
+async function delay(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 async function sendMessageToWebhook(content: string, username: string, avatar_url: string) {
+  await delay(200);
+
+  if (!content.trim()) {
+    throw new Error('El contenido del mensaje está vacío.');
+  }
+
+  const payload = {
+    username: username,
+    avatar_url: avatar_url,
+    content: content,
+  };
+
   const response = await fetch(webhook, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ username, avatar_url, content }),
+    body: JSON.stringify(payload),
   });
 
+  const responseText = await response.text();
   if (!response.ok) {
-    throw new Error('Error en la respuesta del servidor.');
+    throw new Error(`Error en la respuesta del servidor: ${response.status} - ${responseText}`);
   }
 }
 
@@ -116,21 +133,36 @@ function resetForm() {
 <template>
   <div :class="['form-container']">
     <form @submit.prevent="handleSubmit" class="form">
-      <FormField id="name" label="Nombre y Apellidos IC" type="text" placeholder="Ingresa tu nombre y apellidos IC" v-model="name" required />
-      <FormField id="ageIC" label="Edad IC" type="text" placeholder="Ingresa tu edad IC" v-model="ageIC" required :maxlength="2" />
-      <FormField id="ageOOC" label="Edad OOC" type="text" placeholder="Ingresa tu edad OOC" v-model="ageOOC" required :maxlength="2" />
-      <FormField id="discordId" label="ID de Discord" type="text" placeholder="Ingresa tu ID de Discord" v-model="discordId" required />
-      <FormField id="steamUrl" label="URL de Steam" type="url" placeholder="Ingresa tu URL de Steam" v-model="steamUrl" required />
-      <FormField id="dailyTime" label="Tiempo Disponible Diario" type="text" placeholder="Ejemplo: 2 horas diarias" v-model="dailyTime" required />
-      <FormTextarea id="emsRoleKnowledge" label="Conocimiento del Rol de EMS" placeholder="Describe tu conocimiento sobre el rol de EMS" v-model="emsRoleKnowledge" required />
-      <FormTextarea id="previousExperiences" label="Experiencias en Otras Ciudades" placeholder="Describe tus experiencias previas" v-model="previousExperiences" required />
-      <FormTextarea id="whyChooseMe" label="¿Por qué deberíamos elegirte?" placeholder="Explica por qué deberíamos elegirte" v-model="whyChooseMe" required />
-      <FormTextarea id="exampleMe" label="Ejemplo de /me" placeholder="Proporciona un ejemplo de /me" v-model="exampleMe" required />
-      <FormTextarea id="exampleDo" label="Ejemplo de /do" placeholder="Proporciona un ejemplo de /do" v-model="exampleDo" required />
-      <FormTextarea id="medicationForInfection" label="¿Qué medicamentos usarías para una infección?" placeholder="Describe los medicamentos que usarías" v-model="medicationForInfection" required />
-      <FormTextarea id="defineDM" label="Define DM" placeholder="Define DM con tus palabras" v-model="defineDM" required />
-      <FormTextarea id="definePG" label="Define PG" placeholder="Define PG con tus palabras" v-model="definePG" required />
-      <FormTextarea id="defineCarjack" label="Define Carjack" placeholder="Define Carjack con tus palabras" v-model="defineCarjack" required />
+      <FormField id="name" label="Nombre y Apellidos IC" type="text" placeholder="Ingresa tu nombre y apellidos IC"
+        v-model="name" required />
+      <FormField id="ageIC" label="Edad IC" type="text" placeholder="Ingresa tu edad IC" v-model="ageIC" required
+        :maxlength="2" />
+      <FormField id="ageOOC" label="Edad OOC" type="text" placeholder="Ingresa tu edad OOC" v-model="ageOOC" required
+        :maxlength="2" />
+      <FormField id="discordId" label="ID de Discord" type="text" placeholder="Ingresa tu ID de Discord"
+        v-model="discordId" required />
+      <FormField id="steamUrl" label="URL de Steam" type="url" placeholder="Ingresa tu URL de Steam" v-model="steamUrl"
+        required />
+      <FormField id="dailyTime" label="Tiempo Disponible Diario" type="text" placeholder="Ejemplo: 2 horas diarias"
+        v-model="dailyTime" required />
+      <FormTextarea id="emsRoleKnowledge" label="Conocimiento del Rol de EMS"
+        placeholder="Describe tu conocimiento sobre el rol de EMS" v-model="emsRoleKnowledge" required />
+      <FormTextarea id="previousExperiences" label="Experiencias en Otras Ciudades"
+        placeholder="Describe tus experiencias previas" v-model="previousExperiences" required />
+      <FormTextarea id="whyChooseMe" label="¿Por qué deberíamos elegirte?"
+        placeholder="Explica por qué deberíamos elegirte" v-model="whyChooseMe" required />
+      <FormTextarea id="exampleMe" label="Ejemplo de /me" placeholder="Proporciona un ejemplo de /me"
+        v-model="exampleMe" required />
+      <FormTextarea id="exampleDo" label="Ejemplo de /do" placeholder="Proporciona un ejemplo de /do"
+        v-model="exampleDo" required />
+      <FormTextarea id="medicationForInfection" label="¿Qué medicamentos usarías para una infección?"
+        placeholder="Describe los medicamentos que usarías" v-model="medicationForInfection" required />
+      <FormTextarea id="defineDM" label="Define DM" placeholder="Define DM con tus palabras" v-model="defineDM"
+        required />
+      <FormTextarea id="definePG" label="Define PG" placeholder="Define PG con tus palabras" v-model="definePG"
+        required />
+      <FormTextarea id="defineCarjack" label="Define Carjack" placeholder="Define Carjack con tus palabras"
+        v-model="defineCarjack" required />
       <button type="submit">Enviar</button>
     </form>
     <div v-if="successMessage" class="toast success">{{ successMessage }}</div>

@@ -68,30 +68,47 @@ async function sendToDiscord(sections: string[]) {
   const avatar_url = '@/images/muha2.png';
 
   for (const section of sections) {
-    if (messageBuffer.length + section.length + 2 > maxMessageLength) {
-      await sendMessageToWebhook(messageBuffer, username, avatar_url);
+    if (messageBuffer.length + section.length + 1 > maxMessageLength) {
+      await sendMessageToWebhook(messageBuffer.trim(), username, avatar_url);
       messageBuffer = section + '\n';
     } else {
       messageBuffer += section + '\n';
     }
   }
 
-  if (messageBuffer.length > 0) {
-    await sendMessageToWebhook(messageBuffer, username, avatar_url);
+  if (messageBuffer.trim().length > 0) {
+    await sendMessageToWebhook(messageBuffer.trim(), username, avatar_url);
   }
 }
 
+async function delay(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 async function sendMessageToWebhook(content: string, username: string, avatar_url: string) {
+  await delay(200);
+
+  if (!content.trim()) {
+    throw new Error('El contenido del mensaje está vacío.');
+  }
+
+  const payload = {
+    username: username,
+    avatar_url: avatar_url,
+    content: content,
+  };
+
   const response = await fetch(webhook, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ username, avatar_url, content }),
+    body: JSON.stringify(payload),
   });
 
+  const responseText = await response.text();
   if (!response.ok) {
-    throw new Error('Error en la respuesta del servidor.');
+    throw new Error(`Error en la respuesta del servidor: ${response.status} - ${responseText}`);
   }
 }
 
