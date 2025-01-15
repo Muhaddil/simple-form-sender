@@ -27,7 +27,7 @@ const errorMessage = ref('');
 async function handleSubmit() {
   const payload = {
     username: "Muhaddil Form Sender",
-    avatar_url: "https://github.com/Muhaddil/RSSWikiPageCreator/blob/main/public/assets/other/MuhaddilOG.png?raw=true",
+    avatar_url: "https://github.com/Muhaddil/simple-form-sender/blob/main/src/images/muha2.png?raw=true",
     content: `# Nueva Respuesta Formulario SAFD 1:
 
     - **Nombre y Apellidos IC:** ${name.value}

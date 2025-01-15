@@ -65,7 +65,7 @@ async function sendToDiscord(sections: string[]) {
   const maxMessageLength = 2000;
   let messageBuffer = '# Nueva Respuesta Formulario SAMS 3:\n';
   const username = 'Muhaddil Form Sender';
-  const avatar_url = '@/images/muha2.png';
+  const avatar_url = 'https://github.com/Muhaddil/simple-form-sender/blob/main/src/images/muha2.png?raw=true';
 
   for (const section of sections) {
     if (messageBuffer.length + section.length + 1 > maxMessageLength) {
