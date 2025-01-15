@@ -48,24 +48,13 @@ async function handleSubmit() {
   };
 
   try {
-    const response = await fetch(webhook, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(payload),
-    });
-
-    if (response.ok) {
-      successMessage.value = 'Mensaje enviado con éxito';
-      errorMessage.value = '';
-      setTimeout(() => {
-        successMessage.value = '';
-      }, 5000);
-      resetForm();
-    } else {
-      throw new Error('Error en la respuesta del servidor.');
-    }
+    await sendToDiscord(payload);
+    successMessage.value = 'Mensaje enviado con éxito';
+    errorMessage.value = '';
+    setTimeout(() => {
+      successMessage.value = '';
+    }, 5000);
+    resetForm();
   } catch (error) {
     successMessage.value = '';
     errorMessage.value = 'Error al enviar el mensaje.';
@@ -73,6 +62,25 @@ async function handleSubmit() {
       errorMessage.value = '';
     }, 5000);
     console.error(error);
+  }
+}
+
+async function sendToDiscord(payload: { username: string; avatar_url: string; content: string }) {
+  const maxMessageLength = 2000;
+  const chunks = payload.content.match(new RegExp(`.{1,${maxMessageLength}}`, 'g')) || [];
+
+  for (const chunk of chunks) {
+    const response = await fetch(webhook, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ ...payload, content: chunk }),
+    });
+
+    if (!response.ok) {
+      throw new Error('Error en la respuesta del servidor.');
+    }
   }
 }
 

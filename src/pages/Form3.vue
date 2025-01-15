@@ -25,48 +25,32 @@ const successMessage = ref('');
 const errorMessage = ref('');
 
 async function handleSubmit() {
-  const payload = {
-    username: 'Muhaddil Form Sender',
-    avatar_url:
-      'https://github.com/Muhaddil/RSSWikiPageCreator/blob/main/public/assets/other/MuhaddilOG.png?raw=true',
-    content: `# Nueva Respuesta Formulario SAMS 3:
-
-    - **Nombre y Apellidos IC:** ${name.value}
-    - **Edad IC:** ${ageIC.value}
-    - **Edad OOC:** ${ageOOC.value}
-    - **ID de Discord:** ${discordId.value}
-    - **URL de Steam:** ${steamUrl.value}
-    - **Tiempo Disponible Diario:** ${dailyTime.value}
-    - **Conocimiento del Rol de EMS:** ${emsRoleKnowledge.value}
-    - **Experiencias en Otras Ciudades:** ${previousExperiences.value}
-    - **Ejemplo de /me:** ${exampleMe.value}
-    - **Ejemplo de /do:** ${exampleDo.value}
-    - **¿Qué usarías para tratar una incisión leve?:** ${treatmentForInjury.value}
-    - **Define con tus palabras un PKT:** ${defineEnvironment.value}
-    - **Define con tus palabras un CK:** ${canUseVoiceMods.value}
-    - **¿Puedes robar aeronaves?:** ${defineFairPlay.value}
-    - **¿Cuál es el triaje que un SAMS debe seguir a la hora de atender pacientes?:** ${pseudoICTerm.value}`,
-  };
+  const payloadSections = [
+    `- **Nombre y Apellidos IC:** ${name.value}`,
+    `- **Edad IC:** ${ageIC.value}`,
+    `- **Edad OOC:** ${ageOOC.value}`,
+    `- **ID de Discord:** ${discordId.value}`,
+    `- **URL de Steam:** ${steamUrl.value}`,
+    `- **Tiempo Disponible Diario:** ${dailyTime.value}`,
+    `- **Conocimiento del Rol de EMS:** ${emsRoleKnowledge.value}`,
+    `- **Experiencias en Otras Ciudades:** ${previousExperiences.value}`,
+    `- **Ejemplo de /me:** ${exampleMe.value}`,
+    `- **Ejemplo de /do:** ${exampleDo.value}`,
+    `- **¿Qué usarías para tratar una incisión leve?:** ${treatmentForInjury.value}`,
+    `- **Define con tus palabras un PKT:** ${defineEnvironment.value}`,
+    `- **Define con tus palabras un CK:** ${canUseVoiceMods.value}`,
+    `- **¿Puedes robar aeronaves?:** ${defineFairPlay.value}`,
+    `- **¿Cuál es el triaje que un SAMS debe seguir a la hora de atender pacientes?:** ${pseudoICTerm.value}`,
+];
 
   try {
-    const response = await fetch(webhook, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(payload),
-    });
-
-    if (response.ok) {
-      successMessage.value = 'Mensaje enviado con éxito';
-      errorMessage.value = '';
-      setTimeout(() => {
-        successMessage.value = '';
-      }, 5000);
-      resetForm();
-    } else {
-      throw new Error('Error en la respuesta del servidor.');
-    }
+    await sendToDiscord(payloadSections);
+    successMessage.value = 'Mensaje enviado con éxito';
+    errorMessage.value = '';
+    setTimeout(() => {
+      successMessage.value = '';
+    }, 5000);
+    resetForm();
   } catch (error) {
     successMessage.value = '';
     errorMessage.value = 'Error al enviar el mensaje.';
@@ -74,6 +58,40 @@ async function handleSubmit() {
       errorMessage.value = '';
     }, 5000);
     console.error(error);
+  }
+}
+
+async function sendToDiscord(sections: string[]) {
+  const maxMessageLength = 2000;
+  let messageBuffer = '# Nueva Respuesta Formulario SAMS 1:\n';
+  const username = 'Muhaddil Form Sender';
+  const avatar_url = '@/images/muha2.png';
+
+  for (const section of sections) {
+    if (messageBuffer.length + section.length + 2 > maxMessageLength) {
+      await sendMessageToWebhook(messageBuffer, username, avatar_url);
+      messageBuffer = section + '\n';
+    } else {
+      messageBuffer += section + '\n';
+    }
+  }
+
+  if (messageBuffer.length > 0) {
+    await sendMessageToWebhook(messageBuffer, username, avatar_url);
+  }
+}
+
+async function sendMessageToWebhook(content: string, username: string, avatar_url: string) {
+  const response = await fetch(webhook, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ username, avatar_url, content }),
+  });
+
+  if (!response.ok) {
+    throw new Error('Error en la respuesta del servidor.');
   }
 }
 
