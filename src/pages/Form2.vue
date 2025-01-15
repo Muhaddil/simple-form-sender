@@ -63,7 +63,7 @@ async function handleSubmit() {
 
 async function sendToDiscord(sections: string[]) {
   const maxMessageLength = 2000;
-  let messageBuffer = '# Nueva Respuesta Formulario SAMS 1:\n';
+  let messageBuffer = '# Nueva Respuesta Formulario SAMS 2:\n';
   const username = 'Muhaddil Form Sender';
   const avatar_url = '@/images/muha2.png';
 
