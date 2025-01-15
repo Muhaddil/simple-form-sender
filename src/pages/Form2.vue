@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import FormField from './FormField.vue';
-import FormTextarea from './FormTextarea.vue';
+import FormField from '@/components/FormField.vue';
+import FormTextarea from '@/components/FormTextarea.vue';
 import '../css/style.scss';
 
 const webhook = atob(import.meta.env.VITE_DISCORD_WEBHOOK ?? '');
@@ -29,7 +29,7 @@ async function handleSubmit() {
     username: 'Muhaddil Form Sender',
     avatar_url:
       'https://github.com/Muhaddil/RSSWikiPageCreator/blob/main/public/assets/other/MuhaddilOG.png?raw=true',
-    content: `# Nueva Respuesta Formulario SAMS 3:
+    content: `# Nueva Respuesta Formulario SAMS 2:
 
     - **Nombre y Apellidos IC:** ${name.value}
     - **Edad IC:** ${ageIC.value}
@@ -41,11 +41,11 @@ async function handleSubmit() {
     - **Experiencias en Otras Ciudades:** ${previousExperiences.value}
     - **Ejemplo de /me:** ${exampleMe.value}
     - **Ejemplo de /do:** ${exampleDo.value}
-    - **¿Qué usarías para tratar una incisión leve?:** ${treatmentForInjury.value}
-    - **Define con tus palabras un PKT:** ${defineEnvironment.value}
-    - **Define con tus palabras un CK:** ${canUseVoiceMods.value}
-    - **¿Puedes robar aeronaves?:** ${defineFairPlay.value}
-    - **¿Cuál es el triaje que un SAMS debe seguir a la hora de atender pacientes?:** ${pseudoICTerm.value}`,
+    - **¿Qué usarías para tratar un golpe?:** ${treatmentForInjury.value}
+    - **Define el /entorno:** ${defineEnvironment.value}
+    - **¿Se pueden usar moduladores de voz?:** ${canUseVoiceMods.value}
+    - **Define Fairplay:** ${defineFairPlay.value}
+    - **Término de Pseudo IC:** ${pseudoICTerm.value}`,
   };
 
   try {
@@ -109,11 +109,11 @@ function resetForm() {
       <FormTextarea id="previousExperiences" label="Experiencias en Otras Ciudades" placeholder="Describe tus experiencias previas" v-model="previousExperiences" required />
       <FormTextarea id="exampleMe" label="Ejemplo de /me" placeholder="Proporciona un ejemplo de /me" v-model="exampleMe" required />
       <FormTextarea id="exampleDo" label="Ejemplo de /do" placeholder="Proporciona un ejemplo de /do" v-model="exampleDo" required />
-      <FormTextarea id="treatmentForInjury" label="¿Qué usarías para tratar una incisión leve?" placeholder="Describe qué usarías para tratar una incisión leve" v-model="treatmentForInjury" required />
-      <FormTextarea id="defineEnvironment" label="Define con tus palabras un PKT" placeholder="Define con tus palabras un PKT" v-model="defineEnvironment" required />
-      <FormTextarea id="canUseVoiceMods" label="Define con tus palabras un CK" placeholder="Define con tus palabras un CK" v-model="canUseVoiceMods" required />
-      <FormTextarea id="defineFairPlay" label="¿Puedes robar aeronaves?" placeholder="Indica si puedes robar aeronaves" v-model="defineFairPlay" required />
-      <FormTextarea id="pseudoICTerm" label="¿Cuál es el triaje que un SAMS debe seguir a la hora de atender pacientes?" placeholder="Describe el triaje que un SAMS debe seguir" v-model="pseudoICTerm" required />
+      <FormTextarea id="treatmentForInjury" label="¿Qué usarías para tratar un golpe?" placeholder="Describe qué usarías para tratar un golpe" v-model="treatmentForInjury" required />
+      <FormTextarea id="defineEnvironment" label="Define el /entorno" placeholder="Define el /entorno con tus palabras" v-model="defineEnvironment" required />
+      <FormTextarea id="canUseVoiceMods" label="¿Se pueden usar moduladores de voz?" placeholder="Indica si se pueden usar moduladores de voz" v-model="canUseVoiceMods" required />
+      <FormTextarea id="defineFairPlay" label="Define Fairplay" placeholder="Define Fairplay con tus palabras" v-model="defineFairPlay" required />
+      <FormTextarea id="pseudoICTerm" label="Término de Pseudo IC" placeholder="Proporciona un término de Pseudo IC" v-model="pseudoICTerm" required />
       <button type="submit">Enviar</button>
     </form>
     <div v-if="successMessage" class="toast success">

@@ -1,38 +1,39 @@
 <script setup lang="ts">
 import { storeToRefs } from 'pinia';
 import { useRouteDataStore } from '@/stores/routeDataStore';
-import { defineAsyncComponent, type Component } from 'vue';
+import { defineAsyncComponent } from 'vue';
 
-// Obtén los datos de la tienda
 const routeData = useRouteDataStore();
 const { route } = storeToRefs(routeData);
 
-// Define el objeto de rutas
 interface RouterObj {
   component: string;
   requiresData: boolean;
-  componentName: string;
 }
 
 const router: Record<string, RouterObj> = {
-  form1: { component: 'Form1', requiresData: false, componentName: 'Formulario SAMS 1' },
-  form2: { component: 'Form2', requiresData: true, componentName: 'Formulario SAMS 2'},
-  form3: { component: 'Form3', requiresData: true, componentName: 'Formulario SAMS 3' },
-  SAFDForm1: { component: 'SAFDForm1', requiresData: true, componentName: 'Formulario SAFD 1' },
-  SAFDForm2: { component: 'SAFDForm2', requiresData: true, componentName: 'Formulario SAFD 2' },
-  SAFDForm3: { component: 'SAFDForm3', requiresData: true, componentName: 'Formulario SAFD 3' },
-  trasladosform: { component: 'TrasladosForm', requiresData: true, componentName: 'Formulario Traslado' },
-  index: { component: 'Home', requiresData: false, componentName: 'Index' },
+  form1: { component: 'Form1', requiresData: false},
+  form2: { component: 'Form2', requiresData: false},
+  form3: { component: 'Form3', requiresData: false },
+  SAFDForm1: { component: 'SAFDForm1', requiresData: false },
+  SAFDForm2: { component: 'SAFDForm2', requiresData: false },
+  SAFDForm3: { component: 'SAFDForm3', requiresData: false },
+  trasladosform: { component: 'TrasladosForm', requiresData: false },
+  index: { component: 'Home', requiresData: false },
 };
 
-// Valida la ruta actual y selecciona un componente
-const currentRoute = route.value || 'index';
-const routeComponent = router[currentRoute]?.component || 'Home';
+const routeComponentObj = getRouteComponent();
 
-// Importación dinámica del componente basado en la ruta
-const RouteComponent = defineAsyncComponent<Component>(() =>
-  import(`./${routeComponent}.vue`)
-);
+const RouteComponent = defineAsyncComponent({
+  loader: () =>
+    import(`@/pages/${routeComponentObj.component}.vue`)
+});
+
+function getRouteComponent() {
+  const currentRoute = route.value?.toLowerCase();
+  if (!currentRoute || !router[currentRoute]) return router.index;
+  return router[currentRoute];
+}
 </script>
 
 <template>

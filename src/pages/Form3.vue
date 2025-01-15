@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import FormField from './FormField.vue';
-import FormTextarea from './FormTextarea.vue';
+import FormField from '@/components/FormField.vue';
+import FormTextarea from '@/components/FormTextarea.vue';
 import '../css/style.scss';
 
 const webhook = atob(import.meta.env.VITE_DISCORD_WEBHOOK ?? '');
@@ -29,7 +29,7 @@ async function handleSubmit() {
     username: 'Muhaddil Form Sender',
     avatar_url:
       'https://github.com/Muhaddil/RSSWikiPageCreator/blob/main/public/assets/other/MuhaddilOG.png?raw=true',
-    content: `# Nueva Respuesta Formulario SAFD 3:
+    content: `# Nueva Respuesta Formulario SAMS 3:
 
     - **Nombre y Apellidos IC:** ${name.value}
     - **Edad IC:** ${ageIC.value}
@@ -37,7 +37,7 @@ async function handleSubmit() {
     - **ID de Discord:** ${discordId.value}
     - **URL de Steam:** ${steamUrl.value}
     - **Tiempo Disponible Diario:** ${dailyTime.value}
-    - **Conocimiento del rol de SAFD:** ${emsRoleKnowledge.value}
+    - **Conocimiento del Rol de EMS:** ${emsRoleKnowledge.value}
     - **Experiencias en Otras Ciudades:** ${previousExperiences.value}
     - **Ejemplo de /me:** ${exampleMe.value}
     - **Ejemplo de /do:** ${exampleDo.value}
@@ -105,7 +105,7 @@ function resetForm() {
       <FormField id="discordId" label="ID de Discord" type="text" placeholder="Ingresa tu ID de Discord" v-model="discordId" required />
       <FormField id="steamUrl" label="URL de Steam" type="url" placeholder="Ingresa tu URL de Steam" v-model="steamUrl" required />
       <FormField id="dailyTime" label="Tiempo Disponible Diario" type="text" placeholder="Ejemplo: 2 horas diarias" v-model="dailyTime" required />
-      <FormTextarea id="emsRoleKnowledge" label="Conocimiento del rol de SAFD" placeholder="Describe tu conocimiento sobre el rol de SAFD" v-model="emsRoleKnowledge" required />
+      <FormTextarea id="emsRoleKnowledge" label="Conocimiento del Rol de EMS" placeholder="Describe tu conocimiento sobre el rol de EMS" v-model="emsRoleKnowledge" required />
       <FormTextarea id="previousExperiences" label="Experiencias en Otras Ciudades" placeholder="Describe tus experiencias previas" v-model="previousExperiences" required />
       <FormTextarea id="exampleMe" label="Ejemplo de /me" placeholder="Proporciona un ejemplo de /me" v-model="exampleMe" required />
       <FormTextarea id="exampleDo" label="Ejemplo de /do" placeholder="Proporciona un ejemplo de /do" v-model="exampleDo" required />
