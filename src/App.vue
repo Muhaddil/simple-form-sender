@@ -1,17 +1,13 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
-import { defineAsyncComponent, type Component } from 'vue';
 const missingWebhook = !import.meta.env.VITE_DISCORD_WEBHOOK;
-import { componentName, pageformattedName } from '@/types/route';
-import Router from './components/Router.vue';
+import { useRouteDataStore } from '@/stores/routeDataStore';
 import './css/style.scss';
 // import ImageCarousel from './components/ImageCarousel.vue';
 
-const RouteComponent = defineAsyncComponent<Component>({
-  loader: () => import(`./components/${componentName}.vue`),
-});
-
+import Router from './components/Router.vue';
 const isDark = ref(false);
+const routeData = useRouteDataStore();
 
 onMounted(() => {
   const savedTheme = localStorage.getItem('theme');
@@ -45,8 +41,8 @@ function toggleTheme() {
         </li>
       </ul>
     </nav>
-    <h1 class="title">{{ pageformattedName === 'Home' ? '' : `${pageformattedName}` }}</h1>
-    <div class="logo-container">
+    <h1 class="title">{{ routeData.componentName }}</h1>
+      <div class="logo-container">
       <a href="https://discord.gg/5a2PCNN9gy">
         <img src="https://raw.githubusercontent.com/Muhaddil/simple-link-randomizer/refs/heads/main/images/SAEDLogo.png" alt="Logo SAED" class="saed-logo" />
       </a>
@@ -58,6 +54,5 @@ function toggleTheme() {
       No se encontró ninguna URL de algún webhook, ¡no se enviará ningún mensaje!
     </p>
     <Router />
-    <RouteComponent />
   </main>
 </template>
