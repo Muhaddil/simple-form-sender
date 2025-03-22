@@ -25,31 +25,26 @@ const successMessage = ref('');
 const errorMessage = ref('');
 
 async function handleSubmit() {
-  const payload = {
-    username: 'Muhaddil Form Sender',
-    avatar_url:
-      'https://github.com/Muhaddil/simple-form-sender/blob/main/src/images/muha2.png?raw=true',
-    content: `# Nueva Respuesta Formulario SAFD 3:
-
-    - **Nombre y Apellidos IC:** ${name.value}
-    - **Edad IC:** ${ageIC.value}
-    - **Edad OOC:** ${ageOOC.value}
-    - **ID de Discord:** ${discordId.value}
-    - **URL de Steam:** ${steamUrl.value}
-    - **Tiempo Disponible Diario:** ${dailyTime.value}
-    - **Conocimiento del rol de SAFD:** ${emsRoleKnowledge.value}
-    - **Experiencias en Otras Ciudades:** ${previousExperiences.value}
-    - **Ejemplo de /me:** ${exampleMe.value}
-    - **Ejemplo de /do:** ${exampleDo.value}
-    - **¿Qué usarías para tratar una incisión leve?:** ${treatmentForInjury.value}
-    - **Define con tus palabras un PKT:** ${defineEnvironment.value}
-    - **Define con tus palabras un CK:** ${canUseVoiceMods.value}
-    - **¿Puedes robar aeronaves?:** ${defineFairPlay.value}
-    - **¿Cuál es el triaje que un SAMS debe seguir a la hora de atender pacientes?:** ${pseudoICTerm.value}`,
-  };
+  const payloadSections = [
+    `- **Nombre y Apellidos IC:** ${name.value}`,
+    `- **Edad IC:** ${ageIC.value}`,
+    `- **Edad OOC:** ${ageOOC.value}`,
+    `- **ID de Discord:** ${discordId.value}`,
+    `- **URL de Steam:** ${steamUrl.value}`,
+    `- **Tiempo Disponible Diario:** ${dailyTime.value}`,
+    `- **Conocimiento del rol de SAFD:** ${emsRoleKnowledge.value}`,
+    `- **Experiencias en Otras Ciudades:** ${previousExperiences.value}`,
+    `- **Ejemplo de /me:** ${exampleMe.value}`,
+    `- **Ejemplo de /do:** ${exampleDo.value}`,
+    `- **¿Qué usarías para tratar una incisión leve?:** ${treatmentForInjury.value}`,
+    `- **Define con tus palabras un PKT:** ${defineEnvironment.value}`,
+    `- **Define con tus palabras un CK:** ${canUseVoiceMods.value}`,
+    `- **¿Puedes robar aeronaves?:** ${defineFairPlay.value}`,
+    `- **¿Cuál es el triaje que un SAMS debe seguir a la hora de atender pacientes?:** ${pseudoICTerm.value}`,
+];
 
   try {
-    await sendToDiscord(payload);
+    await sendToDiscord(payloadSections);
     successMessage.value = 'Mensaje enviado con éxito';
     errorMessage.value = '';
     setTimeout(() => {
@@ -66,22 +61,54 @@ async function handleSubmit() {
   }
 }
 
-async function sendToDiscord(payload: { username: string; avatar_url: string; content: string }) {
+async function sendToDiscord(sections: string[]) {
   const maxMessageLength = 2000;
-  const chunks = payload.content.match(new RegExp(`.{1,${maxMessageLength}}`, 'g')) || [];
+  let messageBuffer = '# Nueva Respuesta Formulario SAFD 3:\n';
+  const username = 'Muhaddil Form Sender';
+  const avatar_url = 'https://github.com/Muhaddil/simple-form-sender/blob/main/src/images/muha2.png?raw=true';
 
-  for (const chunk of chunks) {
-    const response = await fetch(webhook, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ ...payload, content: chunk }),
-    });
-
-    if (!response.ok) {
-      throw new Error('Error en la respuesta del servidor.');
+  for (const section of sections) {
+    if (messageBuffer.length + section.length + 1 > maxMessageLength) {
+      await sendMessageToWebhook(messageBuffer.trim(), username, avatar_url);
+      messageBuffer = section + '\n';
+    } else {
+      messageBuffer += section + '\n';
     }
+  }
+
+  if (messageBuffer.trim().length > 0) {
+    await sendMessageToWebhook(messageBuffer.trim(), username, avatar_url);
+  }
+}
+
+async function delay(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+async function sendMessageToWebhook(content: string, username: string, avatar_url: string) {
+  await delay(200);
+
+  if (!content.trim()) {
+    throw new Error('El contenido del mensaje está vacío.');
+  }
+
+  const payload = {
+    username: username,
+    avatar_url: avatar_url,
+    content: content,
+  };
+
+  const response = await fetch(webhook, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(payload),
+  });
+
+  const responseText = await response.text();
+  if (!response.ok) {
+    throw new Error(`Error en la respuesta del servidor: ${response.status} - ${responseText}`);
   }
 }
 
