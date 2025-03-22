@@ -23,8 +23,12 @@ const defineFairPlay = ref('');
 const pseudoICTerm = ref('');
 const successMessage = ref('');
 const errorMessage = ref('');
+const isSubmitting = ref(false);
 
 async function handleSubmit() {
+  if (isSubmitting.value) return;
+  isSubmitting.value = true;
+
   const payloadSections = [
     `- **Nombre y Apellidos IC:** ${name.value}`,
     `- **Edad IC:** ${ageIC.value}`,
@@ -52,12 +56,13 @@ async function handleSubmit() {
     }, 5000);
     resetForm();
   } catch (error) {
-    successMessage.value = '';
     errorMessage.value = 'Error al enviar el mensaje.';
     setTimeout(() => {
       errorMessage.value = '';
     }, 5000);
     console.error(error);
+  } finally {
+    isSubmitting.value = false;
   }
 }
 
@@ -81,12 +86,8 @@ async function sendToDiscord(sections: string[]) {
   }
 }
 
-async function delay(ms: number) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
-
 async function sendMessageToWebhook(content: string, username: string, avatar_url: string) {
-  await delay(200);
+  await new Promise((resolve) => setTimeout(resolve, 200));
 
   if (!content.trim()) {
     throw new Error('El contenido del mensaje está vacío.');
@@ -106,9 +107,8 @@ async function sendMessageToWebhook(content: string, username: string, avatar_ur
     body: JSON.stringify(payload),
   });
 
-  const responseText = await response.text();
   if (!response.ok) {
-    throw new Error(`Error en la respuesta del servidor: ${response.status} - ${responseText}`);
+    throw new Error(`Error en la respuesta del servidor: ${response.status} - ${await response.text()}`);
   }
 }
 
@@ -133,7 +133,7 @@ function resetForm() {
 
 <template>
   <div class="form-container">
-    <form @submit.prevent="handleSubmit">
+    <form @submit.prevent="handleSubmit" class="form">
       <FormField id="name" label="Nombre y Apellidos IC" type="text" placeholder="Ingresa tu nombre y apellidos IC" v-model="name" required />
       <FormField id="ageIC" label="Edad IC" type="text" placeholder="Ingresa tu edad IC" v-model="ageIC" required :maxlength="2" />
       <FormField id="ageOOC" label="Edad OOC" type="text" placeholder="Ingresa tu edad OOC" v-model="ageOOC" required :maxlength="2" />
@@ -149,13 +149,9 @@ function resetForm() {
       <FormTextarea id="canUseVoiceMods" label="¿Se pueden usar moduladores de voz?" placeholder="Indica si se pueden usar moduladores de voz" v-model="canUseVoiceMods" required />
       <FormTextarea id="defineFairPlay" label="Define Fairplay" placeholder="Define Fairplay con tus palabras" v-model="defineFairPlay" required />
       <FormTextarea id="pseudoICTerm" label="Término de Pseudo IC" placeholder="Proporciona un término de Pseudo IC" v-model="pseudoICTerm" required />
-      <button type="submit">Enviar</button>
+      <button type="submit" :disabled="isSubmitting">{{ isSubmitting ? 'Enviando...' : 'Enviar' }}</button>
     </form>
-    <div v-if="successMessage" class="toast success">
-      {{ successMessage }}
-    </div>
-    <div v-if="errorMessage" class="toast error">
-      {{ errorMessage }}
-    </div>
+    <div v-if="successMessage" class="toast success">{{ successMessage }}</div>
+    <div v-if="errorMessage" class="toast error">{{ errorMessage }}</div>
   </div>
 </template>
