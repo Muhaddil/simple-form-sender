@@ -40,10 +40,10 @@ async function handleSubmit() {
     `- **Experiencias en Otras Ciudades:** ${previousExperiences.value}`,
     `- **Ejemplo de /me:** ${exampleMe.value}`,
     `- **Ejemplo de /do:** ${exampleDo.value}`,
-    `- **¿Como actuarias en un rescate?:** ${treatmentForInjury.value}`,
-    `- **Define DM:** ${defineEnvironment.value}`,
-    `- **Define PG:** ${canUseVoiceMods.value}`,
-    `- **Define Carjack:** ${defineFairPlay.value}`,
+    `- **¿Como actuarias en un incendio?:** ${treatmentForInjury.value}`,
+    `- **Define el /entorno:** ${defineEnvironment.value}`,
+    `- **¿Se pueden usar moduladores de voz?:** ${canUseVoiceMods.value}`,
+    `- **Define Fairplay:** ${defineFairPlay.value}`,
     `- **Término de Pseudo IC:** ${pseudoICTerm.value}`,
   ];
 
