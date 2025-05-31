@@ -12,8 +12,8 @@ interface RouterObj {
 }
 
 const router: Record<string, RouterObj> = {
-  form1: { component: 'Form1', requiresData: false},
-  form2: { component: 'Form2', requiresData: false},
+  form1: { component: 'Form1', requiresData: false },
+  form2: { component: 'Form2', requiresData: false },
   form3: { component: 'Form3', requiresData: false },
   safdform1: { component: 'SAFDForm1', requiresData: false },
   safdform2: { component: 'SAFDForm2', requiresData: false },
@@ -25,8 +25,7 @@ const router: Record<string, RouterObj> = {
 const routeComponentObj = getRouteComponent();
 
 const RouteComponent = defineAsyncComponent({
-  loader: () =>
-    import(`@/pages/${routeComponentObj.component}.vue`)
+  loader: () => import(`@/pages/${routeComponentObj.component}.vue`),
 });
 
 function getRouteComponent() {

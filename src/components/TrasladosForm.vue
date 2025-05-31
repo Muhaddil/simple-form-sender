@@ -28,8 +28,7 @@ const faction = ref('');
 async function handleSubmit() {
   const payload = {
     username: 'Muhaddil Form Sender',
-    avatar_url:
-      'https://github.com/Muhaddil/RSSWikiPageCreator/blob/main/public/assets/other/MuhaddilOG.png?raw=true',
+    avatar_url: 'https://github.com/Muhaddil/RSSWikiPageCreator/blob/main/public/assets/other/MuhaddilOG.png?raw=true',
     content: `# Nueva Respuesta Formulario Traslados SAED:
 
     - **Nombre de Discord:** ${name.value}
@@ -104,27 +103,131 @@ function resetForm() {
 <template>
   <div class="form-container">
     <form @submit.prevent="handleSubmit">
-      <FormField id="name" label="Nombre y Apellidos IC" type="text" placeholder="Ingresa tu nombre y apellidos IC" v-model="name" required />
-      <FormField id="ageIC" label="Edad IC" type="text" placeholder="Ingresa tu edad IC" v-model="ageIC" required :maxlength="2" />
-      <FormField id="ageOOC" label="Edad OOC" type="text" placeholder="Ingresa tu edad OOC" v-model="ageOOC" required :maxlength="2" />
-      <FormField id="discordId" label="ID de Discord" type="text" placeholder="Ingresa tu ID de Discord" v-model="discordId" required />
-      <FormField id="steamUrl" label="URL de Steam" type="url" placeholder="Ingresa tu URL de Steam" v-model="steamUrl" required />
-      <FormField id="dailyTime" label="Tiempo Disponible Diario" type="text" placeholder="Ejemplo: 2 horas diarias" v-model="dailyTime" required />
-      <FormTextarea id="emsRoleKnowledge" label="Conocimiento del Rol de EMS" placeholder="Describe tu conocimiento sobre el rol de EMS" v-model="emsRoleKnowledge" required />
-      <FormTextarea id="previousExperiences" label="Experiencias en Otras Ciudades" placeholder="Describe tus experiencias previas" v-model="previousExperiences" required />
-      <FormTextarea id="exampleMe" label="Ejemplo de /me" placeholder="Proporciona un ejemplo de /me" v-model="exampleMe" required />
-      <FormTextarea id="exampleDo" label="Ejemplo de /do" placeholder="Proporciona un ejemplo de /do" v-model="exampleDo" required />
-      <FormTextarea id="treatmentForInjury" label="¿Qué usarías para tratar un golpe?" placeholder="Describe qué usarías para tratar un golpe" v-model="treatmentForInjury" required />
-      <FormTextarea id="defineEnvironment" label="Define el /entorno" placeholder="Define el /entorno con tus palabras" v-model="defineEnvironment" required />
-      <FormTextarea id="canUseVoiceMods" label="¿Se pueden usar moduladores de voz?" placeholder="Indica si se pueden usar moduladores de voz" v-model="canUseVoiceMods" required />
-      <FormTextarea id="defineFairPlay" label="Define Fairplay" placeholder="Define Fairplay con tus palabras" v-model="defineFairPlay" required />
-      <FormTextarea id="pseudoICTerm" label="Término de Pseudo IC" placeholder="Proporciona un término de Pseudo IC" v-model="pseudoICTerm" required />
+      <FormField
+        id="name"
+        label="Nombre y Apellidos IC"
+        type="text"
+        placeholder="Ingresa tu nombre y apellidos IC"
+        v-model="name"
+        required
+      />
+      <FormField
+        id="ageIC"
+        label="Edad IC"
+        type="text"
+        placeholder="Ingresa tu edad IC"
+        v-model="ageIC"
+        required
+        :maxlength="2"
+      />
+      <FormField
+        id="ageOOC"
+        label="Edad OOC"
+        type="text"
+        placeholder="Ingresa tu edad OOC"
+        v-model="ageOOC"
+        required
+        :maxlength="2"
+      />
+      <FormField
+        id="discordId"
+        label="ID de Discord"
+        type="text"
+        placeholder="Ingresa tu ID de Discord"
+        v-model="discordId"
+        required
+      />
+      <FormField
+        id="steamUrl"
+        label="URL de Steam"
+        type="url"
+        placeholder="Ingresa tu URL de Steam"
+        v-model="steamUrl"
+        required
+      />
+      <FormField
+        id="dailyTime"
+        label="Tiempo Disponible Diario"
+        type="text"
+        placeholder="Ejemplo: 2 horas diarias"
+        v-model="dailyTime"
+        required
+      />
+      <FormTextarea
+        id="emsRoleKnowledge"
+        label="Conocimiento del Rol de EMS"
+        placeholder="Describe tu conocimiento sobre el rol de EMS"
+        v-model="emsRoleKnowledge"
+        required
+      />
+      <FormTextarea
+        id="previousExperiences"
+        label="Experiencias en Otras Ciudades"
+        placeholder="Describe tus experiencias previas"
+        v-model="previousExperiences"
+        required
+      />
+      <FormTextarea
+        id="exampleMe"
+        label="Ejemplo de /me"
+        placeholder="Proporciona un ejemplo de /me"
+        v-model="exampleMe"
+        required
+      />
+      <FormTextarea
+        id="exampleDo"
+        label="Ejemplo de /do"
+        placeholder="Proporciona un ejemplo de /do"
+        v-model="exampleDo"
+        required
+      />
+      <FormTextarea
+        id="treatmentForInjury"
+        label="¿Qué usarías para tratar un golpe?"
+        placeholder="Describe qué usarías para tratar un golpe"
+        v-model="treatmentForInjury"
+        required
+      />
+      <FormTextarea
+        id="defineEnvironment"
+        label="Define el /entorno"
+        placeholder="Define el /entorno con tus palabras"
+        v-model="defineEnvironment"
+        required
+      />
+      <FormTextarea
+        id="canUseVoiceMods"
+        label="¿Se pueden usar moduladores de voz?"
+        placeholder="Indica si se pueden usar moduladores de voz"
+        v-model="canUseVoiceMods"
+        required
+      />
+      <FormTextarea
+        id="defineFairPlay"
+        label="Define Fairplay"
+        placeholder="Define Fairplay con tus palabras"
+        v-model="defineFairPlay"
+        required
+      />
+      <FormTextarea
+        id="pseudoICTerm"
+        label="Término de Pseudo IC"
+        placeholder="Proporciona un término de Pseudo IC"
+        v-model="pseudoICTerm"
+        required
+      />
       <button type="submit">Enviar</button>
     </form>
-    <div v-if="successMessage" class="toast success">
+    <div
+      v-if="successMessage"
+      class="toast success"
+    >
       {{ successMessage }}
     </div>
-    <div v-if="errorMessage" class="toast error">
+    <div
+      v-if="errorMessage"
+      class="toast error"
+    >
       {{ errorMessage }}
     </div>
   </div>

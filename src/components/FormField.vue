@@ -53,6 +53,8 @@ input {
   font-size: 14px;
   border: 1px solid #ccc;
   border-radius: 8px;
-  transition: border-color 0.3s, box-shadow 0.3s;
+  transition:
+    border-color 0.3s,
+    box-shadow 0.3s;
 }
 </style>

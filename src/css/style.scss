@@ -13,7 +13,9 @@ body {
   margin: 0;
   padding: 0;
   background-color: #f8f9fa;
-  transition: background-color 0.3s, color 0.3s;
+  transition:
+    background-color 0.3s,
+    color 0.3s;
 }
 
 body.dark {
@@ -28,7 +30,9 @@ body.dark {
   background-color: #ffffff;
   border-radius: 10px;
   box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
-  transition: background-color 0.3s, box-shadow 0.3s;
+  transition:
+    background-color 0.3s,
+    box-shadow 0.3s;
 }
 
 body.dark .form-container {
@@ -65,7 +69,9 @@ textarea {
   border-radius: 8px;
   background-color: #f9f9f9;
   color: #000000;
-  transition: border-color 0.3s, box-shadow 0.3s;
+  transition:
+    border-color 0.3s,
+    box-shadow 0.3s;
 }
 
 body.dark input,

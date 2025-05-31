@@ -133,25 +133,141 @@ function resetForm() {
 
 <template>
   <div class="form-container">
-    <form @submit.prevent="handleSubmit" class="form">
-      <FormField id="name" label="Nombre y Apellidos IC" type="text" placeholder="Ingresa tu nombre y apellidos IC" v-model="name" required />
-      <FormField id="ageIC" label="Edad IC" type="text" placeholder="Ingresa tu edad IC" v-model="ageIC" required :maxlength="2" />
-      <FormField id="ageOOC" label="Edad OOC" type="text" placeholder="Ingresa tu edad OOC" v-model="ageOOC" required :maxlength="2" />
-      <FormField id="discordId" label="ID de Discord" type="text" placeholder="Ingresa tu ID de Discord" v-model="discordId" required />
-      <FormField id="steamUrl" label="URL de Steam" type="url" placeholder="Ingresa tu URL de Steam" v-model="steamUrl" required />
-      <FormField id="dailyTime" label="Tiempo Disponible Diario" type="text" placeholder="Ejemplo: 2 horas diarias" v-model="dailyTime" required />
-      <FormTextarea id="emsRoleKnowledge" label="Conocimiento del rol de SAFD" placeholder="Describe tu conocimiento sobre el rol de SAFD" v-model="emsRoleKnowledge" required />
-      <FormTextarea id="previousExperiences" label="Experiencias en Otras Ciudades" placeholder="Describe tus experiencias previas" v-model="previousExperiences" required />
-      <FormTextarea id="whyChooseMe" label="¿Por qué deberíamos elegirte?" placeholder="Explica por qué deberíamos elegirte" v-model="whyChooseMe" required />
-      <FormTextarea id="exampleMe" label="Ejemplo de /me" placeholder="Proporciona un ejemplo de /me" v-model="exampleMe" required />
-      <FormTextarea id="exampleDo" label="Ejemplo de /do" placeholder="Proporciona un ejemplo de /do" v-model="exampleDo" required />
-      <FormTextarea id="medicationForInfection" label="¿Como actuarias en un rescate?" placeholder="Describe el procedimiento completo" v-model="medicationForInfection" required />
-      <FormTextarea id="defineDM" label="Define DM" placeholder="Define DM con tus palabras" v-model="defineDM" required />
-      <FormTextarea id="definePG" label="Define PG" placeholder="Define PG con tus palabras" v-model="definePG" required />
-      <FormTextarea id="defineCarjack" label="Define Carjack" placeholder="Define Carjack con tus palabras" v-model="defineCarjack" required />
-      <button type="submit" :disabled="isSubmitting">{{ isSubmitting ? 'Enviando...' : 'Enviar' }}</button>
+    <form
+      @submit.prevent="handleSubmit"
+      class="form"
+    >
+      <FormField
+        id="name"
+        label="Nombre y Apellidos IC"
+        type="text"
+        placeholder="Ingresa tu nombre y apellidos IC"
+        v-model="name"
+        required
+      />
+      <FormField
+        id="ageIC"
+        label="Edad IC"
+        type="text"
+        placeholder="Ingresa tu edad IC"
+        v-model="ageIC"
+        required
+        :maxlength="2"
+      />
+      <FormField
+        id="ageOOC"
+        label="Edad OOC"
+        type="text"
+        placeholder="Ingresa tu edad OOC"
+        v-model="ageOOC"
+        required
+        :maxlength="2"
+      />
+      <FormField
+        id="discordId"
+        label="ID de Discord"
+        type="text"
+        placeholder="Ingresa tu ID de Discord"
+        v-model="discordId"
+        required
+      />
+      <FormField
+        id="steamUrl"
+        label="URL de Steam"
+        type="url"
+        placeholder="Ingresa tu URL de Steam"
+        v-model="steamUrl"
+        required
+      />
+      <FormField
+        id="dailyTime"
+        label="Tiempo Disponible Diario"
+        type="text"
+        placeholder="Ejemplo: 2 horas diarias"
+        v-model="dailyTime"
+        required
+      />
+      <FormTextarea
+        id="emsRoleKnowledge"
+        label="Conocimiento del rol de SAFD"
+        placeholder="Describe tu conocimiento sobre el rol de SAFD"
+        v-model="emsRoleKnowledge"
+        required
+      />
+      <FormTextarea
+        id="previousExperiences"
+        label="Experiencias en Otras Ciudades"
+        placeholder="Describe tus experiencias previas"
+        v-model="previousExperiences"
+        required
+      />
+      <FormTextarea
+        id="whyChooseMe"
+        label="¿Por qué deberíamos elegirte?"
+        placeholder="Explica por qué deberíamos elegirte"
+        v-model="whyChooseMe"
+        required
+      />
+      <FormTextarea
+        id="exampleMe"
+        label="Ejemplo de /me"
+        placeholder="Proporciona un ejemplo de /me"
+        v-model="exampleMe"
+        required
+      />
+      <FormTextarea
+        id="exampleDo"
+        label="Ejemplo de /do"
+        placeholder="Proporciona un ejemplo de /do"
+        v-model="exampleDo"
+        required
+      />
+      <FormTextarea
+        id="medicationForInfection"
+        label="¿Como actuarias en un rescate?"
+        placeholder="Describe el procedimiento completo"
+        v-model="medicationForInfection"
+        required
+      />
+      <FormTextarea
+        id="defineDM"
+        label="Define DM"
+        placeholder="Define DM con tus palabras"
+        v-model="defineDM"
+        required
+      />
+      <FormTextarea
+        id="definePG"
+        label="Define PG"
+        placeholder="Define PG con tus palabras"
+        v-model="definePG"
+        required
+      />
+      <FormTextarea
+        id="defineCarjack"
+        label="Define Carjack"
+        placeholder="Define Carjack con tus palabras"
+        v-model="defineCarjack"
+        required
+      />
+      <button
+        type="submit"
+        :disabled="isSubmitting"
+      >
+        {{ isSubmitting ? 'Enviando...' : 'Enviar' }}
+      </button>
     </form>
-    <div v-if="successMessage" class="toast success">{{ successMessage }}</div>
-    <div v-if="errorMessage" class="toast error">{{ errorMessage }}</div>
+    <div
+      v-if="successMessage"
+      class="toast success"
+    >
+      {{ successMessage }}
+    </div>
+    <div
+      v-if="errorMessage"
+      class="toast error"
+    >
+      {{ errorMessage }}
+    </div>
   </div>
 </template>

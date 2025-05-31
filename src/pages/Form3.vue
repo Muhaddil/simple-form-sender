@@ -45,7 +45,7 @@ async function handleSubmit() {
     `- **Define con tus palabras un CK:** ${canUseVoiceMods.value}`,
     `- **¿Puedes robar aeronaves?:** ${defineFairPlay.value}`,
     `- **¿Cuál es el triaje que un SAMS debe seguir a la hora de atender pacientes?:** ${pseudoICTerm.value}`,
-];
+  ];
 
   try {
     await sendToDiscord(payloadSections);
@@ -134,24 +134,137 @@ function resetForm() {
 <template>
   <div class="form-container">
     <form @submit.prevent="handleSubmit">
-      <FormField id="name" label="Nombre y Apellidos IC" type="text" placeholder="Ingresa tu nombre y apellidos IC" v-model="name" required />
-      <FormField id="ageIC" label="Edad IC" type="text" placeholder="Ingresa tu edad IC" v-model="ageIC" required :maxlength="2" />
-      <FormField id="ageOOC" label="Edad OOC" type="text" placeholder="Ingresa tu edad OOC" v-model="ageOOC" required :maxlength="2" />
-      <FormField id="discordId" label="ID de Discord" type="text" placeholder="Ingresa tu ID de Discord" v-model="discordId" required />
-      <FormField id="steamUrl" label="URL de Steam" type="url" placeholder="Ingresa tu URL de Steam" v-model="steamUrl" required />
-      <FormField id="dailyTime" label="Tiempo Disponible Diario" type="text" placeholder="Ejemplo: 2 horas diarias" v-model="dailyTime" required />
-      <FormTextarea id="emsRoleKnowledge" label="Conocimiento del Rol de EMS" placeholder="Describe tu conocimiento sobre el rol de EMS" v-model="emsRoleKnowledge" required />
-      <FormTextarea id="previousExperiences" label="Experiencias en Otras Ciudades" placeholder="Describe tus experiencias previas" v-model="previousExperiences" required />
-      <FormTextarea id="exampleMe" label="Ejemplo de /me" placeholder="Proporciona un ejemplo de /me" v-model="exampleMe" required />
-      <FormTextarea id="exampleDo" label="Ejemplo de /do" placeholder="Proporciona un ejemplo de /do" v-model="exampleDo" required />
-      <FormTextarea id="treatmentForInjury" label="¿Qué usarías para tratar una incisión leve?" placeholder="Describe qué usarías para tratar una incisión leve" v-model="treatmentForInjury" required />
-      <FormTextarea id="defineEnvironment" label="Define con tus palabras un PKT" placeholder="Define con tus palabras un PKT" v-model="defineEnvironment" required />
-      <FormTextarea id="canUseVoiceMods" label="Define con tus palabras un CK" placeholder="Define con tus palabras un CK" v-model="canUseVoiceMods" required />
-      <FormTextarea id="defineFairPlay" label="¿Puedes robar aeronaves?" placeholder="Indica si puedes robar aeronaves" v-model="defineFairPlay" required />
-      <FormTextarea id="pseudoICTerm" label="¿Cuál es el triaje que un SAMS debe seguir a la hora de atender pacientes?" placeholder="Describe el triaje que un SAMS debe seguir" v-model="pseudoICTerm" required />
-      <button type="submit" :disabled="isSubmitting">{{ isSubmitting ? 'Enviando...' : 'Enviar' }}</button>
+      <FormField
+        id="name"
+        label="Nombre y Apellidos IC"
+        type="text"
+        placeholder="Ingresa tu nombre y apellidos IC"
+        v-model="name"
+        required
+      />
+      <FormField
+        id="ageIC"
+        label="Edad IC"
+        type="text"
+        placeholder="Ingresa tu edad IC"
+        v-model="ageIC"
+        required
+        :maxlength="2"
+      />
+      <FormField
+        id="ageOOC"
+        label="Edad OOC"
+        type="text"
+        placeholder="Ingresa tu edad OOC"
+        v-model="ageOOC"
+        required
+        :maxlength="2"
+      />
+      <FormField
+        id="discordId"
+        label="ID de Discord"
+        type="text"
+        placeholder="Ingresa tu ID de Discord"
+        v-model="discordId"
+        required
+      />
+      <FormField
+        id="steamUrl"
+        label="URL de Steam"
+        type="url"
+        placeholder="Ingresa tu URL de Steam"
+        v-model="steamUrl"
+        required
+      />
+      <FormField
+        id="dailyTime"
+        label="Tiempo Disponible Diario"
+        type="text"
+        placeholder="Ejemplo: 2 horas diarias"
+        v-model="dailyTime"
+        required
+      />
+      <FormTextarea
+        id="emsRoleKnowledge"
+        label="Conocimiento del Rol de EMS"
+        placeholder="Describe tu conocimiento sobre el rol de EMS"
+        v-model="emsRoleKnowledge"
+        required
+      />
+      <FormTextarea
+        id="previousExperiences"
+        label="Experiencias en Otras Ciudades"
+        placeholder="Describe tus experiencias previas"
+        v-model="previousExperiences"
+        required
+      />
+      <FormTextarea
+        id="exampleMe"
+        label="Ejemplo de /me"
+        placeholder="Proporciona un ejemplo de /me"
+        v-model="exampleMe"
+        required
+      />
+      <FormTextarea
+        id="exampleDo"
+        label="Ejemplo de /do"
+        placeholder="Proporciona un ejemplo de /do"
+        v-model="exampleDo"
+        required
+      />
+      <FormTextarea
+        id="treatmentForInjury"
+        label="¿Qué usarías para tratar una incisión leve?"
+        placeholder="Describe qué usarías para tratar una incisión leve"
+        v-model="treatmentForInjury"
+        required
+      />
+      <FormTextarea
+        id="defineEnvironment"
+        label="Define con tus palabras un PKT"
+        placeholder="Define con tus palabras un PKT"
+        v-model="defineEnvironment"
+        required
+      />
+      <FormTextarea
+        id="canUseVoiceMods"
+        label="Define con tus palabras un CK"
+        placeholder="Define con tus palabras un CK"
+        v-model="canUseVoiceMods"
+        required
+      />
+      <FormTextarea
+        id="defineFairPlay"
+        label="¿Puedes robar aeronaves?"
+        placeholder="Indica si puedes robar aeronaves"
+        v-model="defineFairPlay"
+        required
+      />
+      <FormTextarea
+        id="pseudoICTerm"
+        label="¿Cuál es el triaje que un SAMS debe seguir a la hora de atender pacientes?"
+        placeholder="Describe el triaje que un SAMS debe seguir"
+        v-model="pseudoICTerm"
+        required
+      />
+      <button
+        type="submit"
+        :disabled="isSubmitting"
+      >
+        {{ isSubmitting ? 'Enviando...' : 'Enviar' }}
+      </button>
     </form>
-    <div v-if="successMessage" class="toast success">{{ successMessage }}</div>
-    <div v-if="errorMessage" class="toast error">{{ errorMessage }}</div>
+    <div
+      v-if="successMessage"
+      class="toast success"
+    >
+      {{ successMessage }}
+    </div>
+    <div
+      v-if="errorMessage"
+      class="toast error"
+    >
+      {{ errorMessage }}
+    </div>
   </div>
 </template>

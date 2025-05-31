@@ -2,11 +2,7 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue';
 
-const images = ref([
-  '/images/image.png',
-  '/images/imagen2.jpg',
-  '/images/imagen3.jpg',
-]);
+const images = ref(['/images/image.png', '/images/imagen2.jpg', '/images/imagen3.jpg']);
 
 const currentImageIndex = ref(0);
 const currentSide = ref('left');
@@ -71,7 +67,9 @@ onUnmounted(() => {
 .slide-enter-active-left {
   transform: translateX(50px);
   opacity: 1;
-  transition: transform 1s ease, opacity 0.5s ease;
+  transition:
+    transform 1s ease,
+    opacity 0.5s ease;
 }
 .slide-leave-left {
   transform: translateX(50px);
@@ -80,7 +78,9 @@ onUnmounted(() => {
 .slide-leave-active-left {
   transform: translateX(-100vw);
   opacity: 0;
-  transition: transform 1s ease, opacity 0.5s ease;
+  transition:
+    transform 1s ease,
+    opacity 0.5s ease;
 }
 
 .slide-enter-right {
@@ -90,7 +90,9 @@ onUnmounted(() => {
 .slide-enter-active-right {
   transform: translateX(-50px);
   opacity: 1;
-  transition: transform 1s ease, opacity 0.5s ease;
+  transition:
+    transform 1s ease,
+    opacity 0.5s ease;
 }
 .slide-leave-right {
   transform: translateX(-50px);
@@ -99,6 +101,8 @@ onUnmounted(() => {
 .slide-leave-active-right {
   transform: translateX(100vw);
   opacity: 0;
-  transition: transform 1s ease, opacity 0.5s ease;
+  transition:
+    transform 1s ease,
+    opacity 0.5s ease;
 }
 </style>
