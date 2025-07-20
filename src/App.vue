@@ -34,14 +34,14 @@ function toggleTheme() {
         <li><a href="https://muhaddil.github.io/saed-web-page/">Página Principal</a></li>
         <li><a href="https://muhaddil.github.io/saed-web-page/faq.html">FAQs</a></li>
         <li><a href="https://muhaddil.github.io/saed-web-page/promotions.html">Ascensos</a></li>
-        <li>
+        <!-- <li>
           <button
             class="theme-toggle"
             @click="toggleTheme"
           >
             Cambiar a {{ isDark ? 'Claro' : 'Oscuro' }}
           </button>
-        </li>
+        </li> -->
       </ul>
     </nav>
     <h1 class="title">{{ routeData.componentName }}</h1>
