@@ -1,8 +1,12 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 import FormField from '@/components/FormField.vue';
 import FormTextarea from '@/components/FormTextarea.vue';
 import '../css/style.scss';
+
+onMounted(() => {
+  window.location.href = "safdform1.html";
+});
 
 const webhook = atob(import.meta.env.VITE_DISCORD_WEBHOOK ?? '');
 

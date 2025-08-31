@@ -44,7 +44,7 @@ function toggleTheme() {
         </li> -->
       </ul>
     </nav>
-    <h1 class="title">{{ routeData.componentName }}</h1>
+    <!-- <h1 class="title">{{ routeData.componentName }}</h1>
     <div class="logo-container">
       <a href="https://discord.gg/5a2PCNN9gy">
         <img
@@ -53,7 +53,7 @@ function toggleTheme() {
           class="saed-logo"
         />
       </a>
-    </div>
+    </div> -->
   </header>
 
   <main>

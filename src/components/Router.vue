@@ -24,6 +24,10 @@ const router: Record<string, RouterObj> = {
 
 const routeComponentObj = getRouteComponent();
 
+if (!routeComponentObj) {
+  throw new Error("No route component available");
+}
+
 const RouteComponent = defineAsyncComponent({
   loader: () => import(`@/pages/${routeComponentObj.component}.vue`),
 });
